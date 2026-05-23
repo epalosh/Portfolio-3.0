@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detailer | Ethan Palosh</title>
+    <link rel="stylesheet" href="sharedStyle.css">
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 16px; /* Default font size */
+            font-weight: normal;
+            line-height: 1.5;
+            letter-spacing: normal;
+            word-spacing: normal;
+            text-transform: none;
+            text-align: left;
+            text-decoration: none;
+            text-indent: 0;
+            white-space: normal;
+            margin: 0;
+            padding: 0;
+            color: #000; /* Default text color */
+            word-wrap: break-word;
+            word-break: normal;
+        }
+
+        h2{
+            font-weight: bold;
+            font-size: 4em;
+        }
+
+        h3{
+            text-align: left;
+        }
+
+        p{
+            margin-left: 0px;
+            width:auto;
+            
+        }
+
+        /* Outer container to center the main section */
+        .detailer_outerContainer {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        /* Flexbox container for the entire page content */
+        .detailer_container {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            padding: 20px;
+            box-sizing: border-box;
+            align
+        }
+
+        /* Section container with text and images */
+        .detailer_section {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        /* Text box styling */
+        .detailer_textBox {
+            flex: 1;
+            min-width: 300px;
+            padding: 20px;
+            padding-right: 30px;
+            box-sizing: border-box;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+            width: 80%;
+            margin: 0 auto;
+            background-color: rgb(225, 225, 225);
+            border-radius: 20px;
+            box-shadow: -8px -8px 30px 4px rgba(255, 255, 255, 0.253);
+            min-width: 600px;
+        }
+
+        /* Text box styling */
+        .detailer_textBoxTop {
+            flex: 1;
+            min-width: 300px;
+            padding: 20px;
+            padding-top: 0px;
+            box-sizing: border-box;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+            width: 100%;
+            margin: 0 auto;
+            background-color: rgb(225, 225, 225);
+            border-radius: 20px;
+            box-shadow: -8px -8px 30px 4px rgba(255, 255, 255, 0.253);
+            min-width: 600px;
+        }
+
+        .detailer_textBox h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .detailer_textBox p {
+            font-size: 16px;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        /* Image box styling */
+        .detailer_imageBox {
+            flex: 1;
+            min-width: 300px;
+            max-width: 600px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .detailer_imageBox img {
+            max-width: 100%;
+            height: auto;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .detailer_logosection {
+            display: flex;
+            justify-content: center; /* Centers the content horizontally */
+            align-items: center;     /* Centers the content vertically (optional) */
+        }
+
+        .logo-image {
+            max-height: 150px;  /* Limit the max height of the container */
+            display: block;
+            overflow: hidden; /* Ensure anything outside this container is hidden */
+        }
+
+        .logo-image img {
+            width: auto;
+            height: 100%;  /* Ensure the image height respects the container's max-height */
+            object-fit: contain;  /* Ensure the logo scales properly within the container */
+        }
+
+        /* li {
+            width: 100%;
+        } */
+
+        ul {
+            width: auto;
+        }
+
+
+        /* Media queries for responsive behavior */
+        @media (max-width: 1000px) {
+            .detailer_section {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .detailer_textBox, .detailer_imageBox {
+                max-width: 100%;
+            }
+        }
+
+
+        .button-container {
+            max-width: none;
+            color: white;
+            font-size: 2em;
+            font-weight: bold;
+            padding-top: 0px;
+            padding-bottom: 20px;
+        }
+
+        .linkedin {
+            background-color: #51A0D5; /* Standard LinkedIn color */
+        }
+
+        .pdf {
+            background-color: #725ac5ff; /* Red for PDF to signify importance */
+        }
+
+        .social-button {
+            font-family: Arial, Helvetica, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 230px; /* Slightly wider for more spacing */
+            height: 80px;
+            border-radius: 12px;
+            text-decoration: none;
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+            padding-right: 20px;
+        }
+
+        .social-button img {
+            width: 40px;
+            height: 40px;
+            margin-right: auto;
+            transition: transform 0.2s;
+            padding-left: 40px;
+        }
+
+        .inbuttontext{
+            width: 100%;
+            text-align: left;
+            padding-left: 30px;
+        }
+
+        
+    </style>
+</head>
+<body>
+
+    
+
+    <div class="detailer_outerContainer">
+
+        <div class="detailer_container">
+
+             <!-- Logo -->
+             <div class="detailer_logosection">
+                <img class="logo-image" src="img/detailer/Logo+Text.svg" alt="alternative"></a>
+            </div>
+
+        <!-- Intro -->
+        <div class="detailer_section">
+            <div class="button-container">
+                <!-- LinkedIn Button -->
+                <a href="https://apps.apple.com/us/app/detailer-stay-connected/id6504883187" class="social-button linkedin" target="_blank" aria-label="View on the App Store">
+                    <img src="img/apple.png" alt="LinkedIn Icon">
+                    <div class="inbuttontext">App Store</div>
+                </a>
+            
+                <!-- GitHub Button -->
+                <a href="https://github.com/epalosh/Detailer_Public" class="social-button github" target="_blank" aria-label="Code samples on GitHub">
+                    <img src="img/github.png" alt="GitHub Icon">
+                    <div class="inbuttontext">Github</div>
+                </a>
+            
+                <!-- PDF Reference Letter Button -->
+                <a href="https://thedetailerapp.com/" class="social-button pdf" target="_blank" aria-label="Company Website">
+                    <img src="img/detailerlogowhite.png" alt="PDF Icon">
+                    <div class="inbuttontext">Website</div>
+                </a>
+        </div>
+    </div>
+
+    <!-- Text and Buttons Section -->
+    <div class="detailer_textBoxTop">
+        
+        <h3>Most Comprehensive Personal Project</h3>
+        <p>Here are some key features I implemented:</p>
+        <ul>
+            <li><strong>Secure User Authentication:</strong> A robust system to ensure safe and private user access.</li>
+            <li><strong>User Account Management:</strong> Users can link their data to their account, modify details, and delete accounts as needed.</li>
+            <li><strong>Real-Time Data Updates:</strong> A custom "publisher" infrastructure enables live data updates in the UI without requiring a refresh.</li>
+            <li><strong>Dynamic User Interface:</strong> All UI components are fully functional, including dynamic displays, buttons, and interactive views.</li>
+            <li><strong>Custom Messaging System:</strong> A unique design for messaging and notifications to enhance user communication.</li>
+            <li><strong>Account Interaction Features:</strong> Users can add and manage connections, providing a seamless experience.</li>
+            <li><strong>Push Notifications:</strong> Integrated JavaScript push-notification functionality running on Google Cloud for global user engagement.</li>
+            <li><strong>Global User Statistics:</strong> Real-time tracking and display of user data across the globe.</li>
+            <li><strong>In-App Purchases:</strong> Full integration of in-app purchases, supporting app revenue generation.</li>
+            <li><strong>LLM-Driven Core Features:</strong> Integrated Large Language Model (LLM) support for enhancing core app functionality.</li>
+            <li><strong>OpenAI Integration:</strong> Dynamic data provided by OpenAI's API to support intelligent app features.</li>
+            <li><strong>Remote Config:</strong> Select data is loaded from the database, and used for setting a global minimum app version across all users.</li>
+
+        </ul>
+    </div>
+
+
+
+            <!-- Section 1 -->
+            <div class="detailer_section">
+                <div class="detailer_textBox">
+                    <h2>Functional & Intuitive UI</h2>
+                    <p>All UI elements are defined in code and fully customized. I designed the dashboard to immediately display important information, reducing clicks and making the user experience seamless. I went through many iterations of each view, and after several months of feedback, I arrived at the current design! </p>
+
+                    
+                    <ul>
+                        <li><strong>Dashboard:</strong> The primary view of the app, which is displayed on app launch. The dashboard shows a horizontal scroll view of message cards, which are ranked by latest activity. If new comments come in, they are displayed. Otherwise messages are shown.</li>
+                        <br>
+                        <li><strong>Sending Messages:</strong> Users are guided through a unique messaging flow that utilizes OpenAI's API to generate questions and prompt users to send a detailed story in their message.</li>
+                        <br>
+                        <li><strong>Design:</strong> Designed using SwiftUI for a uniform appearance across Apple devices with different screen sizes. Additionally, the app looks natural and native to the device.</li>
+                    </ul>
+
+                    <p><strong>Pictured:</strong> Several views from the app. To experience it yourself, download the app quick on your phone and click around! :)</p>
+                
+                </div>
+                <div class="detailer_imageBox">
+                    <img src="img/detailer/ui.png" alt="UI">
+                </div>
+            </div>
+
+            <!-- Section 2 -->
+            <div class="detailer_section">
+                <div class="detailer_textBox">
+
+                    <h2>Authentication & Database</h2>
+                    <p>User accounts, user data, and global statistics are fully built-out using Google Firebase. The app interfaces with Firebase through network calls (similar to a REST API) to place data into secure locations based on the user that's logged in.</p>
+
+                    
+                    <ul>
+                        <li><strong>Accounts:</strong> Each user can create an account using email & password. Accounts can be labeled by "student", "parent", and "other" so I, the developer, can keep track of who uses the app the most. Users can alse request a password change through a secure email, and make modifications to their account details inside the app (such as updating their name or school).</li>
+                        <br>
+                        <li><strong>Database:</strong> User data is keyed by the user's UID, and secure from other users. Only users that are authorized to access certain areas of the database can do so. Additionally, I designed database queries to be effiecient as possible, as Firebase charges developers based on the number of queries. Therefore, the app is built to scale!</li>
+                        <br>
+                        <li><strong>Statistics:</strong> Global "sent messages" count is stored in the database and updated properly to prevent race conditions.</li>
+                    </ul>
+
+                    <p><strong>Pictured:</strong> A small screenshot of the Firebase console, showing some of my personal account's user data. Lots of lines are redacted for security reasons, but it outlines some of the basic info included in messages and how they are keyed.</p>
+    
+                    
+                </div>
+                <div class="detailer_imageBox">
+                    <img src="img/detailer/database.png" alt="Database">
+                </div>
+            </div>
+
+            <!-- Section 3 -->
+            <div class="detailer_section">
+                <div class="detailer_textBox">
+                    <h2>Google Cloud Functions</h2>
+                    <p>Several Javascript functions are running 24/7 on Google Cloud servers to securely monitor database activity. They are authorized for database access, and are functionally "admins" to the application.</p>
+
+                    <ul>
+                        <li>When a notification is requested (new message/connection/comment), these functions securely execute the request and send a push-notification to the user!</li>
+                    </ul>
+
+                    <p><strong>Pictured:</strong> Detailer's three primary Google Cloud functions for remote push notifications.</p>
+                </div>
+                <div class="detailer_imageBox">
+                    <img src="img/detailer/cloudfunctions.png" alt="Placeholder image 3">
+                </div>
+            </div>
+
+
+            <!-- <div class="detailer_section">
+                
+                <div class="detailer_textBox">
+                    <h2>Live Data w/ Publishers</h2>
+                    <p>This is the second text section. You can switch the order of text and image for variety. Use this layout to add additional details and supporting visuals.</p>
+                </div>
+
+                <div class="detailer_imageBox">
+                    <img src="https://via.placeholder.com/600x400" alt="Placeholder image 2">
+                </div>
+            </div>
+
+
+            
+
+             <div class="detailer_section">
+
+                <div class="detailer_textBox">
+                    <h2>Ai Integration</h2>
+                    <p>This is the second text section. You can switch the order of text and image for variety. Use this layout to add additional details and supporting visuals.</p>
+                </div>
+
+                <div class="detailer_imageBox">
+                    <img src="https://via.placeholder.com/600x400" alt="Placeholder image 2">
+                </div>
+            </div> -->
+        </div>
+    </div>
+</body>
+</html>
