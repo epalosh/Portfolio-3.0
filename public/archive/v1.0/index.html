@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <base href="/archive/v1.0/">
+    <meta name="description" content="Ethan Palosh Computer Engineering + Computer Science Interactive Portfolio">
+
+    <title>Ethan Palosh | Portfolio</title>
+
+    <link rel="stylesheet" href="sharedStyle.css">
+
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .button {
+            text-shadow: 0 0 100px white, 0 0 1px white, 0 0 15px white;
+        }
+
+        #main-content h2 {
+            text-shadow: 0 0 100px white, 0 0 1px white, 0 0 15px white;
+        }
+
+        h1 {
+            text-shadow: 0 0 100px white, 0 0 1px white, 0 0 15px white;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
+        h2 {
+            text-shadow: 0 0 100px white, 0 0 1px white, 0 0 15px white;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
+        h4 { 
+            color: rgb(0, 0, 0);
+            text-align: center;
+            font-size: 5em;
+            margin: 0px;
+            padding-top: 0px;
+            padding-left: 20px;
+        }
+
+        h5 { 
+            color: rgb(255, 255, 255);
+            text-align: center;
+            font-size: 5em;
+            margin: 0px;
+            padding-top: 20px;
+            padding-left: 20px;
+
+        }
+
+		.scrolldown {
+			position: absolute;
+			top: 750px;
+			left: 50%; 
+			transform: translateX(-50%);
+			animation: moveDownwards .7s ease-in-out 2s forwards;
+			font-weight: 100;
+		}
+
+		@keyframes moveDownwards {
+			from {
+				top: 750px;
+			}
+			to {
+				top: 850px;
+			}
+		}
+
+		.typewriter {
+            overflow: hidden; /* Ensures the content is not revealed until the animation */
+            white-space: nowrap; /* Keeps the content on a single line */
+            margin: 0 auto; /* Gives that scrolling effect as the typing happens */
+            letter-spacing: .15em; /* Adjust as needed */
+            animation: typing 3.5s steps(40, end);
+        }
+
+
+
+        /* Pulse animation for node */
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        /* Media query for screens smaller than 1200px */
+        @media (max-width: 1200px) {
+        /* Adjust the container layout */
+        .container {
+            gap: 30px; /* Reduce gap between nodes and arrows */
+            padding-top: 55px; /* Adjust padding for smaller screens */
+        }
+
+        /* Adjust the node size */
+        .node {
+            width: 135px; /* Reduce width */
+            height: 60px; /* Reduce height */
+            font-size: 1.2em; /* Adjust font size */
+            border-radius: 15px;
+        }
+
+        /* Reduce height of the navigator section */
+        #node-navigator {
+            height: 200px; /* Decrease height */
+        }
+
+        h4{
+            font-size: 4em;
+        }
+        h5{
+            font-size: 4em;
+        }
+        /* .button-container {
+            padding-top:0px;
+        } */
+        }
+
+        /* Media query for very small screens (like mobile phones) */
+        @media (max-width: 920px) {
+        .container {
+            gap: 20px; /* Further reduce gap */
+            padding-top: 38px; /* Adjust padding */
+        }
+
+        .node {
+            width: 110px; /* Further reduce node size */
+            height: 50px;
+            font-size: 1em; /* Smaller font size */
+            border-radius: 10px;
+        }
+
+        /* Adjust arrow size */
+        .arrow {
+            visibility: hidden;
+        }
+
+        #node-navigator {
+            height: 140px; /* Adjust navigator height */
+        }
+
+        h4{
+            font-size: 2.5em;
+        }
+        h5{
+            font-size: 2.5em;
+        }
+    }
+
+    /* Media query for extremely small screens (less than 480px) */
+    @media (max-width: 700px) {
+    /* Adjust the container layout for ultra-small screens */
+    .container {
+        /* flex-direction: column; Stack items vertically */
+        gap: 10px; /* Minimize gap */
+        padding-top: 22px; /* Reduce top padding */
+    }
+
+    /* Adjust the node size */
+    .node {
+        width: 80px; /* Make nodes even smaller */
+        height: 35px;
+        font-size: 0.7em; /* Even smaller font size */
+        border-radius: 8px;
+    }
+
+    /* Adjust arrow size */
+    .arrow {
+        visibility: hidden;
+    }
+
+    /* Reduce height of the navigator section */
+    #node-navigator {
+        height: 100px; /* Smaller navigator section */
+    }
+
+    h4{
+        font-size: 1.5em;
+    }
+    h5{
+        font-size: 1.5em;
+    }
+}
+
+    .resume_image {
+        margin-top: 10px;
+        margin-right: 10px;
+        width: 150px;
+        height: 150px;
+        box-shadow: -8px -8px 30px 4px rgba(49, 49, 49, 0.1);
+        border-radius: 20px;
+    }
+
+    .headshot_image {
+    flex-shrink: 0;
+    width: 100%; /* Allow scaling */
+    margin-top: 10px;
+    max-width: 275px; /* Restrict max size */
+    height: auto; /* Maintain aspect ratio */
+    box-shadow: -8px -8px 30px 4px rgba(49, 49, 49, 0.1);
+    border-radius: 20px;
+    object-fit: contain; /* Ensure proper scaling without cropping */
+    }
+
+  .content-container {
+        display: flex;
+        align-items: flex-start;
+        width: 100%;
+    }
+
+    #resumeSection {
+        padding-top: 0px;
+    }
+
+    .resume_title{
+        padding-top: 0px;
+        font-size: 4em;
+        font-family: Arial, Helvetica, sans-serif;
+        letter-spacing: normal;
+        font-weight: 600;
+        text-shadow: none;
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
+    .resume_subtitle{
+        padding-top: 0px;
+        font-size: 1.75em;
+        font-family: Arial, Helvetica, sans-serif;
+        letter-spacing: normal;
+        font-weight: 400;
+        font-style: italic;
+        color: rgb(94, 94, 94);
+        text-shadow: none;
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
+    .resume_body{
+        padding-top: 0px;
+        font-size: 1em;
+        font-family: Arial, Helvetica, sans-serif;
+        letter-spacing: normal;
+        font-weight: bold;
+        color: rgb(0, 0, 0);
+        text-shadow: none;
+
+        word-wrap: break-word; /* Allows long words to wrap to the next line */
+        white-space: normal; /* Ensures that text will wrap and not overflow */
+        line-height: 1.5; /* Optional: improves readability */
+    }
+
+    .indented_resume_body{
+        padding-left: 20px;
+        font-weight: 400;
+    }
+
+    .resume_text{
+        padding-left: 20px;
+        padding-right: 20px;
+        width: 100%;
+    }
+
+    .indented_spacing{
+        line-height: 10%;
+    }
+
+    #projects{
+        color: white;
+    }
+
+    #detailer_image{
+        width: 210px;
+        height: 264px;
+    }
+
+
+
+
+
+
+    /* Existing styles */
+    #projectSection {
+        font-family: 'Courier New', Courier, monospace; 
+        display: flex;
+        flex-direction: column;
+        /* justify-content: center; */
+        align-items: center;
+        min-height: 100vh;
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        color: white;
+    }
+
+    .grid-container {
+        display: grid;
+        gap: 20px;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        max-width: 100%;
+        width: 90%;
+        padding: 40px;
+    }
+
+    .grid-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        position: relative; /* Allows positioning of overlay text */
+    }
+
+    .grid-item a {
+        display: block;
+        width: 90%;
+    }
+
+    .grid-image {
+        width: 100%;
+        border-radius: 8px;
+        transition: transform 0.3s, opacity 0.3s;
+    }
+
+    .grid-item:hover .grid-image {
+        transform: scale(1.05);
+        opacity: .3;
+    }
+
+    .grid-item:hover .overlay-text {
+        opacity: 1;
+    }
+
+    .description {
+        font-weight: bold;
+        margin-top: 8px;
+        font-size: 1.6em;
+    }
+
+    .overlay-text {
+        position: absolute;
+        top: 45%;
+        left: 50%;
+        transform: translate(-50%, -45%);
+        color: white;
+        font-size: 1.5em;
+        font-weight: bold;
+        text-align: center;
+        opacity: 0;
+        transition: opacity 0.3s;
+        width: 100%;
+    }
+
+
+    .littleText{
+    color: white;
+    text-align: center;
+    }
+
+    #resumepdf{
+    color: white;
+    text-align: center;
+    font-size: 1.1em;
+    }
+
+    #aboutMeSection {
+    visibility: hidden;
+    }
+    #projectsSection {
+    visibility: hidden;
+    }
+
+    /* Stack items vertically on smaller screens */
+    @media (max-width: 1200px) {
+        .grid-container {
+            grid-template-columns: 1fr;
+        }
+
+        .headshot_image{
+        width: 200px;
+        }
+    }
+
+    @media (max-width: 1000px) {
+
+    .headshot_image{
+    width: 150px;
+    }
+    }
+
+    @media (max-width: 925px) {
+
+        .headshot_image{
+            width: 100px;
+    }
+    }
+
+
+
+
+
+
+    .container_resume {
+        
+        box-sizing: border-box;
+    }
+
+    #profile {
+    padding-bottom: 30px;
+    }
+
+
+<style>
+    /* Style for the overlay background */
+    .modal-overlay {
+        
+      display: none; /* Hidden by default */
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+      z-index: 1000; /* Ensure it appears above other content */
+    }
+
+    /* Modal styling */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+    }
+
+    .modal-content {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 80%;
+      max-width: 95%;
+      height: 80%;
+      background-color: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      z-index: 1001;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background-color: #725ac5ff;
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 40px;
+    }
+
+    .close-btn:hover {
+      background-color: #d32f2f;
+    }
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    </style>
+
+</head>
+
+<body>
+    <style>
+      .ep-portfolio-bar {
+        position: fixed; top: 0; left: 0; right: 0; z-index: 9999;
+        height: 44px; background: #f5f5f7;
+        display: flex; align-items: center; padding: 0 24px;
+      }
+      .ep-portfolio-bar a {
+        display: inline-flex; align-items: center; gap: 7px;
+        font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+        font-size: 13px; font-weight: 600; letter-spacing: -0.005em;
+        color: rgba(0,0,0,0.45); text-decoration: none;
+        transition: color 0.2s ease;
+      }
+      .ep-portfolio-bar a:hover { color: #0a0a0c; }
+      .ep-portfolio-bar svg { width: 12px; height: 12px; flex-shrink: 0; }
+      .ep-portfolio-bar__notice {
+        font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+        font-size: 13px; font-weight: 600; letter-spacing: -0.005em;
+        color: rgba(0,0,0,0.45);
+        position: absolute; left: 50%; transform: translateX(-50%);
+      }
+      .navbar { top: 44px !important; }
+      body { padding: 0 20px 20px; }
+      .ep-frame-l, .ep-frame-r { position: fixed; top: 0; bottom: 0; width: 20px; background: #f5f5f7; z-index: 9998; }
+      .ep-frame-l { left: 0; border-right: 1px solid rgba(0,0,0,0.08); }
+      .ep-frame-r { right: 0; border-left: 1px solid rgba(0,0,0,0.08); }
+      .ep-frame-b { position: fixed; bottom: 0; left: 0; right: 0; height: 20px; background: #f5f5f7; border-top: 1px solid rgba(0,0,0,0.08); z-index: 9998; }
+    </style>
+    <div class="ep-portfolio-bar">
+      <a href="/">
+        <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M13 8H3M7 12L3 8L7 4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        ethanpalosh.com
+      </a>
+      <span class="ep-portfolio-bar__notice">Archived &mdash; This website is NOT up-to-date. It was live from 2023 to early 2025.</span>
+    </div>
+    <div class="ep-frame-l"></div>
+    <div class="ep-frame-r"></div>
+    <div class="ep-frame-b"></div>
+   <!-- 
+     __    __   _______  __       __        ______             
+    |  |  |  | |   ____||  |     |  |      /  __  \            
+    |  |__|  | |  |__   |  |     |  |     |  |  |  |           
+    |   __   | |   __|  |  |     |  |     |  |  |  |           
+    |  |  |  | |  |____ |  `----.|  `----.|  `--'  |  __ __ __ 
+    |__|  |__| |_______||_______||_______| \______/  (__|__|__)
+            
+    Thanks for checking out my portfolio website! :D
+
+    WEBSITE BY: ETHAN PALOSH
+    Last updated: 11/21/24
+    -->
+
+    <div class="navbar">
+        <a href="index.html">Home</a>
+        <a href="#aboutMeSection">/About</a>
+        <a href="#projectsSection">/Projects</a>
+        <a href="#resumeSection">/Resume</a>
+    </div>
+
+    <div id="header">
+
+        <h1>Ethan Palosh</h1>
+         
+        <h2>Computer Science & Engineering</h2>
+        <div class="scrolldown">scroll down.</div>
+    </div>
+
+      <hr id="aboutMeSection"style="width: 95%; border: 0.5px solid white; margin: 20px auto;">
+      <br><br>
+        <div>
+        <body_resume>
+
+          <div class="container_resume" id="profile"> <!-- paper -->
+              <div class="content-container">
+                  <div class="resume_text">
+                      <h1 class="resume_title">Ethan Palosh</h1>
+                      
+                      <h2 class="resume_subtitle">Undergraduate at the University of Southern California</h2>
+                      <br>
+                      <div class="resume_body">
+                          <!-- <div>At Foreflight, I worked alongside full-time engineers to design and develop internal software for user-data publisher infrastructure.</div> -->
+
+                          <div>Hey! My name is Ethan Palosh, and this is my website portfolio! Below, you will find my projects, professional experience, and more about me! </div>
+                          
+                        </div>
+                          <div class="button-container">
+                            <!-- LinkedIn Button -->
+                            <a href="https://www.linkedin.com/in/ethanpalosh/" class="social-button linkedin" target="_blank" aria-label="LinkedIn Profile">
+                                <img src="img/linkedin.png" alt="LinkedIn Icon">
+                                LinkedIn
+                            </a>
+                        
+                            <!-- GitHub Button -->
+                            <a href="https://github.com/epalosh" class="social-button github" target="_blank" aria-label="GitHub Profile">
+                                <img src="img/github.png" alt="GitHub Icon">
+                                GitHub
+                            </a>
+                        
+                        </div>
+                  </div>
+                  <img class="headshot_image" src="img/headshot.png" alt="Picture of me!">
+              </div>              
+              
+          </div_resume>
+      </body_resume>
+    </div>
+
+        <br><br><br>
+       
+
+
+        <hr id="projectsSection" style="width: 95%; border: 0.5px solid white; margin: 20px auto;">
+
+        <br><br>
+        <h5>Projects</h5>
+        
+        <div id="projectSection">
+            <div class="grid-container">
+                <!-- Repeat this grid-item block for each image link -->
+                <div class="grid-item" onclick="openModal('detailer.html')">
+                    <a>
+                    <img src="img/projects/detailer.png" alt="Description 1" class="grid-image">
+                    </a>
+                    <div class="overlay-text">Swift, Full-Stack, Firebase</div>
+                    <div class="description">Published iOS App!</div>
+                </div>
+
+                <!-- Popup Modal -->
+                <div id="modal" class="modal-overlay">
+                    <div class="modal-content">
+                    <button class="close-btn" onclick="closeModal()">X</button>
+                    <iframe id="modal-iframe" src=""></iframe>
+                    </div>
+                </div>
+
+                <div class="grid-item">
+                  <a href="https://github.com/epalosh/Custom_CAN_Dashboard" target="_blank">
+                  <img src="img/projects/dashboard.png" alt="Description 1" class="grid-image">
+                  </a>
+                  <div class="overlay-text">C++, Custom Electronics</div>
+                  <div class="description">Custom Dashboard</div>
+              </div>
+
+            </div>
+
+            <div class="grid-container">
+                <!-- Repeat this grid-item block for each image link -->
+
+                <div class="grid-item">
+                  <a href="https://github.com/epalosh/Leo-The-SurveyBot" target="_blank">
+                  <img src="img/projects/survey.png" alt="Description 1" class="grid-image">
+                  </a>
+                  <div class="overlay-text">C++, Arduino</div>
+                  <div class="description">Door-Mounted Survey</div>
+              </div>
+
+                <div class="grid-item">
+                  <a href="https://github.com/epalosh/Portfolio_Website" target="_blank">
+                  <img src="img/projects/portfolio_website.png" alt="Description 2" class="grid-image">
+                  </a>
+                  <div class="overlay-text">HTML, JavaScript</div>
+                  <div class="description">Website Portfolio</div>
+              </div>
+                
+                <div class="grid-item">
+                    <a>
+                    <img src="img/projects/blank.png" alt="Description 2" class="grid-image">
+                    </a>
+                    <div class="overlay-text">Preception, Computer Vision</div>
+                    <div class="description">In progress</div>
+                </div>
+
+                <div class="grid-item">
+                    <a>
+                    <img src="img/projects/blank.png" alt="Description 1" class="grid-image">
+                    </a>
+                    <div class="overlay-text">AI, Tensorflow</div>
+                    <div class="description">In progress</div>
+                </div>
+            </div>
+        </div>
+
+
+    <div id="homepage-main-content1">
+        
+      <hr id="resumeSection" style="width: 95%; border: 0.5px solid white; margin: 20px auto;">
+      <br><br>
+        <h5>Resume</h5>
+        <br>
+
+        <body_resume>
+
+            <div class="container_resume"> <!-- paper -->
+
+                <!-- Foreflight -->
+                <div class="content-container">
+                    <img class="resume_image" src="img/resume/foreflight.png" alt="foreflight logo">
+                    <div class="resume_text">
+                        <h1 class="resume_title">Foreflight</h1>
+                        
+                        <h2 class="resume_subtitle">Software Engineering Intern</h2>
+                        <br>
+                        <div class="resume_body">
+                            <div>At Foreflight, I worked alongside full-time engineers to design and develop internal software for user-data publisher infrastructure.</div>
+                            <br>
+                            <div class="indented_resume_body">
+                                <div>+ Developed production code in Swift, Java, and Objective-C.</div>
+                                <div>+ Demonstrated rapid proficiency in the Apple Development environment for both front-end and back-end development.</div>
+                                <div>+ Practiced agile best-practices, participated in a PR workflow, and wrote automated tests for all code.</div>
+                                <!-- <div>+ Researched and proposed improvements to my team's workflow, which improved versioning efforts and overall productivity.</div> -->
+                                <div>+ Contributed effectively and knowledgeably to conceptual system design discussions.</div>
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+                </div>              
+                
+                <br>
+                <hr style="padding:20px, width: 100%; border: 0.5px solid black;">
+                <br>
+
+                <!-- NASA -->
+                <div class="content-container">
+
+                    <img class="resume_image" src="img/resume/nasa.png" alt="nasa logo">
+                    
+                    <div class="resume_text">
+                        <h1 class="resume_title">NASA</h1>
+                        
+                        <h2 class="resume_subtitle">Research Intern</h2>
+                        <br>
+                        <div class="resume_body">
+                            <div>At NASA, I co-authored a research publication and served a role providing quantatative metrics on classified satelite data.</div>
+                            <br>
+                            <div class="indented_resume_body">
+                                <div>+ Analyzed millions of datapoints in classified NASA satelite datasets using JavaScript and Python.</div>
+                                <div>+ Contributed meaningfully to an original research paper investigating the El Niño/La Niña Phenomenon.</div>
+                                <div>+ Developed additional graphics and animations to visualize the team's discoveries in presentation materials.</div>
+                                <div>+ Co-presented our paper at the AGU Scientific Conference.</div>
+                            </div>
+                            <br>
+                            <div>View the abstract of our paper <a href="https://agu.confex.com/agu/fm22/meetingapp.cgi/Paper/1122339" target="_blank">here</a>.</div>
+                        </div>
+                    </div>
+                </div>     
+
+                <br>
+                <hr style="padding:20px, width: 100%; border: 0.5px solid black;">
+                <br>
+
+                <!-- USC Racing -->
+                <div class="content-container">
+
+                    <img class="resume_image" src="img/resume/racing.png" alt="USC racing logo">
+                    
+                    <div class="resume_text">
+                        <h1 class="resume_title">USC Racing</h1>
+                        
+                        <h2 class="resume_subtitle">Head Software Engineer</h2>
+                        <br>
+                        <div class="resume_body">
+                            <div>As part of USC's Formula SAE project design team, I manage all custom software on our formula racing car.</div>
+                            <br>
+                            <div class="indented_resume_body">
+                                <div>+ Designed, constructed, and wrote code for a custom driver dashboard interface in C++ utilizing CAN networking.</div>
+                                <div>+ Developed custom ECU firmware to satisfy strict competition safety guidelines.</div>
+                                <div>+ Tested and documented hundreds of components on the car's wiring harness in RapidHarness CAD software.</div>
+                                <div>+ As driver: Comprehensive knowledge of car and mental agility to perform in high-stakes environments.</div>
+                            </div>
+                            <br>
+                            <div>Learn about the team <a href="https://www.uscformulasae.com/" target="_blank">here</a>.</div>
+                        </div>
+                    </div>
+                </div>     
+
+                <br>
+                <hr style="padding:20px, width:100%; border:0.5px solid black;">
+                <br>
+
+                <!-- Robotics -->
+                <div class="content-container">
+
+                    <img class="resume_image" src="img/resume/robotics.png" alt="Robot">
+                    
+                    <div class="resume_text">
+                        <h1 class="resume_title">Competition Robotics</h1>
+                        
+                        <h2 class="resume_subtitle">Autonomous Software Specialist</h2>
+                        <br>
+                        <div class="resume_body">
+                            <div>Responsible for all autonomous software and utilized advanced techniques to succeed in global competition.</div>
+                            <br>
+                            <div class="indented_resume_body">
+                                <div>+ Responsible for all autonomous software and sensors on robot. <b>Ranked 3rd in world for autonomous control.</b></div>
+                                <div>+ Utilized advanced techniques: sensor fusion localization, computer vision, and object tracking for 100% of autonomous control period.</div>
+                                <div>+ Designed a unique autonomous path that accurately traverses variable terrain using computer vision, giving our team a distinct advantage.</div>
+                                <div>+ Served in community STEM outreach efforts - FRC 2468 earned top 6 in the world (finalists) for Impact Award.</div>
+                            </div>
+                            <br>
+                            <div>FRC 2468 is a globally recognized program in competition robotics.</div>
+                        </div>
+                    </div>
+                </div>     
+                
+                
+            </div_resume>
+        </body_resume>
+    </div>
+        <br><br><br>
+ 
+    
+    <div id="footer">    
+        HTML by me.
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            // Function to animate typing effect
+            function typeWriter(text, i, fnCallback) {
+                if (i < (text.length)) {
+                    // Add next character to h1
+                    $('#header h1').html(text.substring(0, i+1));
+                    // Wait for a while then call this function again for next character
+                    setTimeout(function() {
+                        typeWriter(text, i + 1, fnCallback)
+                    }, 100);
+                }
+                // End of typing, call callback if it is defined
+                else if (typeof fnCallback == 'function') {
+                    setTimeout(fnCallback, 700);
+                }
+            }
+            // Start the typing animation for h1 element
+            function StartTextAnimation(i) {
+                if (typeof dataText[i] == 'undefined'){
+                    setTimeout(function() {
+                        StartTextAnimation(0);
+                    }, 20000); // Change time here to adjust pause between typing cycles
+                }
+                // Check if dataText[i] exists
+                if (i < dataText[i].length) {
+                    // Start typewriter animation
+                    typeWriter(dataText[i], 0, function(){
+                        // Call function again to start next text
+                        StartTextAnimation(i + 1);
+                    });
+                }
+            }
+            // Data for typewriter effect
+            var dataText = [ ">Ethan Palosh"];
+            // Start the typewriter animation
+            StartTextAnimation(0);
+        });
+
+
+// Open modal and load content
+function openModal(url) {
+      document.getElementById('modal-iframe').src = url; // Load the external page
+      document.getElementById('modal').style.display = 'block'; // Show the modal
+    }
+
+    // Close modal and clear content
+    function closeModal() {
+      document.getElementById('modal').style.display = 'none'; // Hide the modal
+      document.getElementById('modal-iframe').src = ''; // Clear the iframe content
+    }
+
+    // Close modal if user clicks outside the content
+    document.getElementById('modal').addEventListener('click', function (event) {
+      if (event.target === this) {
+        closeModal();
+      }
+    });
+    </script>
+
+
+</body>
+</html>
