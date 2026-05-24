@@ -79,13 +79,19 @@
     }
     </script>
     <style>
-      body { padding: 44px 20px 20px; }
-      .header { top: 44px !important; }
-      .nav-menu { top: 44px !important; height: calc(100vh - 44px) !important; }
+      html, body { margin: 0; padding: 0; background: #f5f5f7; overflow: hidden; height: 100%; }
+      .ep-stage {
+        position: fixed;
+        top: 44px; left: 20px; right: 20px; bottom: 20px;
+        overflow: auto;
+        transform: translateZ(0);
+        -webkit-overflow-scrolling: touch;
+        z-index: 1;
+      }
+      .header { top: 0 !important; }
+      .nav-menu { top: 0 !important; height: 100% !important; }
       @media (max-width: 640px) {
-        body { padding-top: 72px; }
-        .header { top: 72px !important; }
-        .nav-menu { top: 72px !important; height: calc(100vh - 72px) !important; }
+        .ep-stage { top: 72px; }
       }
     </style>
     <script type="module" crossorigin src="./assets/index--xpk_yPM.js"></script>
@@ -142,6 +148,6 @@
     <div class="ep-frame-l"></div>
     <div class="ep-frame-r"></div>
     <div class="ep-frame-b"></div>
-    <div id="root"></div>
+    <div class="ep-stage"><div id="root"></div></div>
   </body>
 </html>
