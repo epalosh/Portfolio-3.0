@@ -77,7 +77,7 @@ export default function Graveyard() {
             </div>
           </article>
 
-          <article className="proj reveal" style={{ '--reveal-delay': '200ms' } as React.CSSProperties}>
+          <article className="proj proj--detailer reveal" style={{ '--reveal-delay': '200ms' } as React.CSSProperties}>
             <div className="proj__art">
               <img src="/images/detailerproductpreview.png" alt="Detailer" />
             </div>

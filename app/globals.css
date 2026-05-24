@@ -1198,6 +1198,11 @@ a.h-linkedin__label:hover { opacity: 0.75; }
   .sechead .meta { align-self: start; }
   .proj__copy { padding: 18px 20px 20px; }
   .proj__head h3 { font-size: 19px; }
+  .proj--detailer .proj__head .proj__logo { width: 32px; height: 32px; }
+  .proj--detailer .proj__head h3 { font-size: 16.5px; }
+  .proj--detailer .proj__copy p { font-size: 13px; }
+  .proj--detailer .proj__btn { padding: 7px 11px; font-size: 11.5px; gap: 6px; }
+  .proj--detailer .proj__btn svg { width: 12px; height: 12px; }
   .timeline { padding-top: 0; }
   .tl-rail { gap: 10px; padding: 0 var(--d-pad-x) 0 calc(var(--d-pad-x) + 18px); }
   .tl-rail::before { left: calc(var(--d-pad-x) + 3px); }
