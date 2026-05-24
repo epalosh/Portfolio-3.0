@@ -786,6 +786,7 @@ a.h-linkedin__label:hover { opacity: 0.75; }
 @media (max-width: 540px) {
   .proj--inv .proj__copy { grid-template-columns: 1fr; gap: 18px; }
   .proj__logo { width: 100%; height: auto; aspect-ratio: 1 / 1; }
+  .proj--inv .proj__logo { display: none; }
 }
 
 /* EXPERIENCE TIMELINE */
