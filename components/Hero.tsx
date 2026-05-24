@@ -33,7 +33,7 @@ export default function Hero() {
           {/* Currently building */}
           <article
             className="tile h-side h-current reveal"
-            style={{ transitionDelay: '60ms' }}
+            style={{ '--reveal-delay': '60ms' } as React.CSSProperties}
           >
             <span className="kicker">Currently building at:</span>
             <div className="h-side__body">
@@ -50,7 +50,7 @@ export default function Hero() {
           {/* Graduating */}
           <article
             className="tile h-side h-status reveal"
-            style={{ transitionDelay: '100ms' }}
+            style={{ '--reveal-delay': '100ms' } as React.CSSProperties}
           >
             <span className="kicker">Graduating:</span>
             <div className="h-side__body">
@@ -62,7 +62,7 @@ export default function Hero() {
           {/* LinkedIn */}
           <article
             className="tile h-linkedin reveal"
-            style={{ transitionDelay: '140ms' }}
+            style={{ '--reveal-delay': '140ms' } as React.CSSProperties}
           >
             <a className="proj__link" href="https://www.linkedin.com/in/ethanpalosh" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" />
             <span className="kicker">Find out more:</span>
@@ -76,7 +76,7 @@ export default function Hero() {
           </article>
 
           {/* Ask me about */}
-          <article className="tile h-ask reveal" style={{ transitionDelay: '180ms' }}>
+          <article className="tile h-ask reveal" style={{ '--reveal-delay': '180ms' } as React.CSSProperties}>
             <div className="h-ask__left">
               <span className="kicker">my hobbies</span>
               <h3 className="h-ask__lead">Ask me about... <span>things I love!</span></h3>
@@ -145,7 +145,7 @@ export default function Hero() {
           <a
             className="tile h-writing reveal"
             href="#graveyard"
-            style={{ transitionDelay: '220ms' }}
+            style={{ '--reveal-delay': '220ms' } as React.CSSProperties}
           >
             <div className="h-writing__left">
               <span className="kicker">My Work</span>

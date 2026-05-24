@@ -9,7 +9,7 @@ export default function About() {
           <div className="about__photo reveal">
             <img src="/images/Profile_Photo.JPG" alt="Ethan Palosh" />
           </div>
-          <div className="about__copy reveal" style={{ transitionDelay: '120ms' }}>
+          <div className="about__copy reveal" style={{ '--reveal-delay': '120ms' } as React.CSSProperties}>
             <div className="about__edu">
               <span className="kicker">Education</span>
               <h4 className="about__school">USC Viterbi School of Engineering</h4>

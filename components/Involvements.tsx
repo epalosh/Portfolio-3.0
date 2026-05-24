@@ -28,7 +28,7 @@ export default function Involvements() {
             </div>
           </article>
 
-          <article className="proj proj--inv reveal" style={{ transitionDelay: '100ms' }}>
+          <article className="proj proj--inv reveal" style={{ '--reveal-delay': '100ms' } as React.CSSProperties}>
             <a className="proj__link" href="https://www.uscformulasae.com/" target="_blank" rel="noopener noreferrer" aria-label="USC Racing" />
             <div className="proj__art">
               <img src="/images/USCRacingpreview.JPG" alt="USC Racing" style={{ objectPosition: 'center 50%' }} />

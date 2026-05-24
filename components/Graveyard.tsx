@@ -44,7 +44,7 @@ export default function Graveyard() {
             </div>
           </article>
 
-          <article className="proj reveal" style={{ transitionDelay: '100ms' }}>
+          <article className="proj reveal" style={{ '--reveal-delay': '100ms' } as React.CSSProperties}>
             <div className="proj__art">
               <img src="/images/oasisproductpreview.png" alt="Oasis" />
             </div>
@@ -77,7 +77,7 @@ export default function Graveyard() {
             </div>
           </article>
 
-          <article className="proj reveal" style={{ transitionDelay: '200ms' }}>
+          <article className="proj reveal" style={{ '--reveal-delay': '200ms' } as React.CSSProperties}>
             <div className="proj__art">
               <img src="/images/detailerproductpreview.png" alt="Detailer" />
             </div>
