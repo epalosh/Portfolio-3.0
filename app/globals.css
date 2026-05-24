@@ -192,9 +192,7 @@ html[data-back-nav] .reveal { opacity: 1; transform: none; animation: none; }
 .nav__inner--open { border-radius: 18px; }
 
 @media (max-width: 880px) {
-  .nav__links--desktop, .nav__cta--desktop { display: none; }
-  .nav__hamburger { display: flex; align-items: center; }
-  .nav__inner { width: 60%; padding: 6px 8px; flex-wrap: wrap; border-radius: 22px; }
+  .nav { display: none; }
 }
 
 /* Section heads */
