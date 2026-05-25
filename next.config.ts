@@ -19,6 +19,7 @@ const nextConfig: NextConfig = {
       { source: '/archive/v1.0/', destination: '/archive/v1.0/index.html' },
       { source: '/archive/v2.0', destination: '/archive/v2.0/index.html' },
       { source: '/archive/v2.0/', destination: '/archive/v2.0/index.html' },
+      { source: '/recommendation', destination: '/files/recommendation.pdf' },
     ]
   },
 }
