@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Manufacturing Production Throughput Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* Satori design tokens */
+    :root {
+      --satori-bg-deepest: #FFFFFF;
+      --satori-bg-panel: #FAFAFA;
+      --satori-bg-hover: #F5F5F5;
+      --satori-bg-border: #EAEAEA;
+      --satori-text-primary: #000000;
+      --satori-text-body: #333333;
+      --satori-text-secondary: #666666;
+      --satori-text-muted: #999999;
+      --satori-text-hint: #CCCCCC;
+      --satori-btn-bg: #000000;
+      --satori-btn-text: #FFFFFF;
+    }
+    .dark {
+      --satori-bg-deepest: #000000;
+      --satori-bg-panel: #111111;
+      --satori-bg-hover: #1A1A1A;
+      --satori-bg-border: #333333;
+      --satori-text-primary: #EDEDED;
+      --satori-text-body: #A1A1A1;
+      --satori-text-secondary: #888888;
+      --satori-text-muted: #555555;
+      --satori-text-hint: #333333;
+      --satori-btn-bg: #FFFFFF;
+      --satori-btn-text: #000000;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--satori-bg-deepest);
+      color: var(--satori-text-body);
+      line-height: 1.5;
+      overflow: hidden;
+    }
+    .font-sans { font-family: 'Inter', system-ui, sans-serif; }
+    .font-mono { font-family: 'Inter', system-ui, sans-serif; }
+    #root { padding: 16px; }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 4px; height: 4px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--satori-text-muted); border-radius: 3px; }
+  </style>
+  <!-- Preload hints — lets the browser discover all scripts immediately -->
+  <link rel="preload" href="/archive/satori-prod-demo/vendor/react.18.3.1.production.min.js" as="script" />
+  <link rel="preload" href="/archive/satori-prod-demo/vendor/react-dom.18.3.1.production.min.js" as="script" />
+  <link rel="preload" href="/archive/satori-prod-demo/vendor/prop-types.15.8.1.min.js" as="script" />
+  <link rel="preload" href="/archive/satori-prod-demo/vendor/recharts.2.15.3.umd.min.js" as="script" />
+  <link rel="preload" href="/archive/satori-prod-demo/vendor/lucide-react.0.344.0.umd.min.js" as="script" />
+  <!-- Version-pinned self-hosted dependencies (React 18 UMD) -->
+  <script src="/archive/satori-prod-demo/vendor/react.18.3.1.production.min.js"></script>
+  <script src="/archive/satori-prod-demo/vendor/react-dom.18.3.1.production.min.js"></script>
+  <script src="/archive/satori-prod-demo/vendor/prop-types.15.8.1.min.js"></script>
+  <script>
+    // lucide-react UMD expects window.react (lowercase). React UMD sets window.React (uppercase).
+    window.react = window.React;
+  </script>
+  <script src="/archive/satori-prod-demo/vendor/recharts.2.15.3.umd.min.js"></script>
+  <script src="/archive/satori-prod-demo/vendor/lucide-react.0.344.0.umd.min.js"></script>
+  <script>
+    // Expose library exports as globals so agent-generated code can
+    // reference them as bare variables without explicit imports.
+    // Only set properties that don't already exist on window to avoid
+    // shadowing built-in globals (e.g. Map, Infinity, Set from lucide).
+    function _exposeGlobals(ns) {
+      if (!ns) return;
+      for (var k in ns) {
+        if (!(k in window)) {
+          try { window[k] = ns[k]; } catch(e) {}
+        }
+      }
+    }
+    _exposeGlobals(window.Recharts);
+    _exposeGlobals(window.LucideReact);
+  </script>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script>
+  // Satori component implementations (inline, no Tailwind dependency)
+  window.__SATORI__ = (function() {
+    var h = React.createElement;
+
+    function SatoriPanel(props) {
+      var style = {
+        background: 'var(--satori-bg-panel)',
+        border: '1px solid var(--satori-bg-border)',
+        borderRadius: '4px',
+        padding: '16px',
+      };
+      // Accept both header={{ title, actions }} and title="..." + actions={...}
+      var headerTitle = props.header ? props.header.title : props.title;
+      var headerActions = props.header ? props.header.actions : props.actions;
+      return h('div', { style: style },
+        headerTitle ? h('div', { style: {
+          display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+          paddingBottom: '12px', marginBottom: '12px',
+          borderBottom: '1px solid var(--satori-bg-border)',
+          fontFamily: "'Inter', system-ui, sans-serif",
+          fontSize: '16px', fontWeight: 600, lineHeight: '24px',
+          color: 'var(--satori-text-primary)',
+        }},
+          h('span', null, headerTitle),
+          headerActions
+        ) : null,
+        props.children
+      );
+    }
+
+    function SatoriKPI(props) {
+      // Normalize trend: accept string, number, or object { value, direction }.
+      var trend = props.trend;
+      var trendDir = props.trendDirection;
+      var trendText = null;
+      if (trend != null && typeof trend === 'object') {
+        trendText = trend.value || trend.label || trend.text || JSON.stringify(trend);
+        trendDir = trendDir || trend.direction || trend.trendDirection;
+      } else {
+        trendText = trend;
+      }
+      var trendColor = trendDir === 'up' ? '#22c55e'
+        : trendDir === 'down' ? '#ef4444' : 'var(--satori-text-secondary)';
+      return h(SatoriPanel, null,
+        h('div', { style: { fontFamily: "'Inter', system-ui, sans-serif", fontSize: '11px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', lineHeight: '16px', color: 'var(--satori-text-secondary)' }}, props.label),
+        h('div', { style: { fontFamily: "'Inter', system-ui, sans-serif", fontSize: '28px', fontWeight: 600, lineHeight: '36px', color: 'var(--satori-text-primary)', marginTop: '4px', fontVariantNumeric: 'tabular-nums' }}, props.value),
+        trendText != null ? h('div', { style: { display: 'flex', alignItems: 'center', gap: '4px', marginTop: '4px' }},
+          h('span', { style: { width: '5px', height: '5px', background: trendColor, display: 'inline-block' }}),
+          h('span', { style: { fontFamily: "'Inter', system-ui, sans-serif", fontSize: '12px', lineHeight: '16px', color: trendColor }}, String(trendText))
+        ) : null
+      );
+    }
+
+    function SatoriDataValue(props) {
+      var style = { fontFamily: "'Inter', system-ui, sans-serif", fontSize: '13px', lineHeight: '20px', fontVariantNumeric: 'tabular-nums', color: 'var(--satori-text-body)' };
+      return h('span', { style: style }, props.children || props.value);
+    }
+
+    function SatoriEmpty(props) {
+      return h('div', { style: { display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '32px', gap: '8px' }},
+        h('div', { style: { color: 'var(--satori-text-muted)', fontSize: '14px', lineHeight: '20px', textAlign: 'center' }}, props.message || 'No data'),
+        props.action ? h('button', { onClick: props.onAction, style: { background: 'none', border: 'none', color: '#3b82f6', fontSize: '14px', cursor: 'pointer' }}, props.action) : null
+      );
+    }
+
+    function SatoriError(props) {
+      return h('div', { style: { display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '32px', gap: '8px' }},
+        h('div', { style: { width: '5px', height: '5px', background: '#ef4444', display: 'inline-block' }}),
+        h('div', { style: { color: '#ef4444', fontFamily: "'Inter', system-ui, sans-serif", fontSize: '13px', lineHeight: '20px', textAlign: 'center' }}, props.message || 'An error occurred'),
+        props.detail ? h('div', { style: { color: 'var(--satori-text-muted)', fontSize: '12px', lineHeight: '16px', textAlign: 'center', maxWidth: '400px' }}, props.detail) : null,
+        props.onRetry ? h('button', { onClick: props.onRetry, style: { background: 'none', border: '1px solid var(--satori-bg-border)', borderRadius: '4px', padding: '4px 12px', color: 'var(--satori-text-body)', fontSize: '13px', cursor: 'pointer', marginTop: '8px' }}, 'Retry') : null
+      );
+    }
+
+    return { SatoriPanel: SatoriPanel, SatoriKPI: SatoriKPI, SatoriDataValue: SatoriDataValue, SatoriEmpty: SatoriEmpty, SatoriError: SatoriError };
+  })();
+  </script>
+
+  <script>
+    // Theme sync from parent
+    window.addEventListener('message', function(e) {
+      if (e.data && e.data.type === 'theme') {
+        document.documentElement.classList.toggle('dark', e.data.dark);
+      }
+    });
+    // Request initial theme
+    window.parent.postMessage({ type: 'theme_request' }, '*');
+
+    // Global error trap — catches ALL uncaught errors including those
+    // that escape React's error boundary (e.g. errors in event handlers,
+    // async callbacks, or swallowed-then-rethrown exceptions).
+    var _errorReported = false;
+    window.onerror = function(msg, src, line, col, err) {
+      if (_errorReported) return;
+      _errorReported = true;
+      window.parent.postMessage({
+        type: 'runtime_error',
+        errors: [String(err ? err.message : msg)]
+      }, '*');
+    };
+    window.addEventListener('unhandledrejection', function(e) {
+      if (_errorReported) return;
+      _errorReported = true;
+      var msg = e.reason ? String(e.reason.message || e.reason) : 'Unhandled promise rejection';
+      window.parent.postMessage({
+        type: 'runtime_error',
+        errors: [msg]
+      }, '*');
+    });
+  </script>
+
+  <!-- Compiled module bundle -->
+  <script>var __MODULE__=(()=>{var d=Object.defineProperty;var k=Object.getOwnPropertyDescriptor;var S=Object.getOwnPropertyNames;var A=Object.prototype.hasOwnProperty;var C=(e,a)=>{for(var r in a)d(e,r,{get:a[r],enumerable:!0})},w=(e,a,r,s)=>{if(a&&typeof a=="object"||typeof a=="function")for(let i of S(a))!A.call(e,i)&&i!==r&&d(e,i,{get:()=>a[i],enumerable:!(s=k(a,i))||s.enumerable});return e};var D=e=>w(d({},"__esModule",{value:!0}),e);var T={};C(T,{default:()=>f});function f(){let{SatoriPanel:e,SatoriKPI:a}=window.__SATORI__,{LineChart:r,Line:s,BarChart:i,Bar:g,XAxis:l,YAxis:p,CartesianGrid:u,ResponsiveContainer:y,Tooltip:c}=window.Recharts,v=[{label:"Units produced (14d)",value:"142,318",trend:"+6.8% vs prior 14d",trendDirection:"up"},{label:"OEE",value:"76.4%",trend:"+2.1 pts",trendDirection:"up"},{label:"Downtime hours",value:"38.2",trend:"-4.9 hrs",trendDirection:"up"},{label:"First-pass yield",value:"97.1%",trend:"-0.4 pts",trendDirection:"down"}],x=[{day:"Mar 31",L01:4120,L03:3980,L07:3450},{day:"Apr 01",L01:4180,L03:4020,L07:3520},{day:"Apr 02",L01:4210,L03:3850,L07:3410},{day:"Apr 03",L01:4260,L03:4105,L07:3495},{day:"Apr 04",L01:4050,L03:3620,L07:3280},{day:"Apr 05",L01:3890,L03:3510,L07:3100},{day:"Apr 06",L01:4290,L03:4130,L07:3555},{day:"Apr 07",L01:4340,L03:4170,L07:3590},{day:"Apr 08",L01:4280,L03:4060,L07:3470},{day:"Apr 09",L01:4315,L03:4115,L07:3550},{day:"Apr 10",L01:4370,L03:4190,L07:3610},{day:"Apr 11",L01:4225,L03:3940,L07:3395},{day:"Apr 12",L01:3860,L03:3450,L07:3020},{day:"Apr 13",L01:4380,L03:4225,L07:3640}],b=[{cause:"Changeover",minutes:612},{cause:"Material short",minutes:428},{cause:"Mech. failure",minutes:345},{cause:"Quality hold",minutes:210},{cause:"Operator break",minutes:188},{cause:"Scheduled maint",minutes:140},{cause:"Other",minutes:75}],m=[{ts:"2026-04-13 14:22",line:"L-03",cause:"Mech. failure",mins:47,status:"resolved"},{ts:"2026-04-13 09:08",line:"L-07",cause:"Material short",mins:33,status:"resolved"},{ts:"2026-04-12 22:41",line:"L-01",cause:"Changeover",mins:28,status:"resolved"},{ts:"2026-04-12 15:12",line:"L-07",cause:"Quality hold",mins:19,status:"resolved"},{ts:"2026-04-11 17:05",line:"L-03",cause:"Material short",mins:41,status:"resolved"}],n={fontFamily:"Inter, sans-serif",fontSize:11,fill:"var(--satori-text-muted)"},o="var(--satori-bg-border)",L={backgroundColor:"var(--satori-bg-panel)",border:"1px solid var(--satori-bg-border)",borderRadius:3,fontSize:12,fontFamily:"Inter, sans-serif"};return React.createElement("div",{style:{display:"flex",flexDirection:"column",gap:12,padding:16,fontFamily:"Inter, sans-serif"}},React.createElement("div",{style:{display:"grid",gridTemplateColumns:"repeat(auto-fit, minmax(200px, 1fr))",gap:12}},v.map(t=>React.createElement(a,{key:t.label,...t}))),React.createElement("div",{style:{display:"grid",gridTemplateColumns:"minmax(0, 2fr) minmax(0, 1fr)",gap:12}},React.createElement(e,{header:{title:"Throughput by line \u2014 past 14 days"}},React.createElement("div",{style:{height:260}},React.createElement(y,{width:"100%",height:"100%"},React.createElement(r,{data:x,margin:{top:8,right:12,left:0,bottom:0}},React.createElement(u,{stroke:o,strokeDasharray:"2 4",vertical:!1}),React.createElement(l,{dataKey:"day",tick:n,axisLine:{stroke:o},tickLine:!1}),React.createElement(p,{tick:{...n,fontFeatureSettings:'"tnum"'},axisLine:{stroke:o},tickLine:!1}),React.createElement(c,{contentStyle:L}),React.createElement(s,{type:"monotone",dataKey:"L01",name:"Line 01",stroke:"#3b82f6",strokeWidth:1.75,dot:!1}),React.createElement(s,{type:"monotone",dataKey:"L03",name:"Line 03",stroke:"#14b8a6",strokeWidth:1.75,dot:!1}),React.createElement(s,{type:"monotone",dataKey:"L07",name:"Line 07",stroke:"#f59e0b",strokeWidth:1.75,dot:!1}))))),React.createElement(e,{header:{title:"Downtime Pareto"}},React.createElement("div",{style:{height:260}},React.createElement(y,{width:"100%",height:"100%"},React.createElement(i,{data:b,layout:"vertical",margin:{top:8,right:12,left:12,bottom:0}},React.createElement(u,{stroke:o,strokeDasharray:"2 4",horizontal:!1}),React.createElement(l,{type:"number",tick:{...n,fontFeatureSettings:'"tnum"'},axisLine:{stroke:o},tickLine:!1}),React.createElement(p,{type:"category",dataKey:"cause",width:110,tick:n,axisLine:{stroke:o},tickLine:!1}),React.createElement(c,{contentStyle:L,formatter:t=>[`${t} min`,"Downtime"]}),React.createElement(g,{dataKey:"minutes",fill:"#ef4444",radius:[0,2,2,0]})))))),React.createElement(e,{header:{title:"Recent downtime events"}},React.createElement("table",{style:{width:"100%",borderCollapse:"collapse",fontVariantNumeric:"tabular-nums"}},React.createElement("thead",null,React.createElement("tr",{style:{borderBottom:"1px solid var(--satori-bg-border)"}},["Timestamp","Line","Cause","Duration","Status"].map(t=>React.createElement("th",{key:t,style:{textAlign:"left",padding:"8px 10px",fontSize:11,fontWeight:600,letterSpacing:"0.04em",textTransform:"uppercase",color:"var(--satori-text-secondary)"}},t)))),React.createElement("tbody",null,m.map((t,h)=>React.createElement("tr",{key:h,style:{borderBottom:h===m.length-1?"none":"1px solid var(--satori-bg-border)"}},React.createElement("td",{style:{padding:"8px 10px",fontSize:13,color:"var(--satori-text-body)"}},t.ts),React.createElement("td",{style:{padding:"8px 10px",fontSize:13,color:"var(--satori-text-primary)",fontWeight:500}},t.line),React.createElement("td",{style:{padding:"8px 10px",fontSize:13,color:"var(--satori-text-body)"}},t.cause),React.createElement("td",{style:{padding:"8px 10px",fontSize:13,color:"var(--satori-text-body)"}},t.mins," min"),React.createElement("td",{style:{padding:"8px 10px"}},React.createElement("span",{style:{display:"inline-flex",alignItems:"center",gap:6,fontSize:11,textTransform:"uppercase",letterSpacing:"0.04em",color:"#22c55e",fontWeight:500}},React.createElement("span",{style:{width:5,height:5,backgroundColor:"#22c55e",display:"inline-block"}}),t.status))))))))}return D(T);})();
+</script>
+
+  <script>
+    // React Error Boundary — catches runtime crashes after initial mount
+    // (e.g. null reference errors in useMemo when data arrives).
+    var _ErrorBoundary = (function() {
+      function EB(props) {
+        React.Component.call(this, props);
+        this.state = { error: null };
+      }
+      EB.prototype = Object.create(React.Component.prototype);
+      EB.prototype.constructor = EB;
+      EB.getDerivedStateFromError = function(error) {
+        return { error: error };
+      };
+      EB.prototype.componentDidCatch = function(error, info) {
+        var msg = String(error.message || error);
+        var stack = info && info.componentStack ? info.componentStack.trim().split('\n').slice(0, 3).join(' > ') : '';
+        // Notify parent so ModuleIframe can show the error + fix button.
+        window.parent.postMessage({
+          type: 'runtime_error',
+          errors: [msg],
+          stack: stack
+        }, '*');
+      };
+      EB.prototype.render = function() {
+        if (this.state.error) {
+          // Render null — the parent handles the error UI.
+          // No visible element means no ResizeObserver jank.
+          return null;
+        }
+        return this.props.children;
+      };
+      return EB;
+    })();
+
+    // Mount the module component wrapped in the error boundary
+    try {
+      var root = ReactDOM.createRoot(document.getElementById('root'));
+      root.render(
+        React.createElement(_ErrorBoundary, null,
+          React.createElement(__MODULE__.default)
+        )
+      );
+    } catch (err) {
+      var safeMsg = String(err.message || err).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+      document.getElementById('root').innerHTML =
+        '<div style="font-family:Inter,system-ui,sans-serif;padding:16px;color:#ef4444;">' +
+        '<h3>Runtime Error</h3><pre>' + safeMsg + '</pre></div>';
+      window.parent.postMessage({ type: 'runtime_error', errors: [String(err.message || err)] }, '*');
+    }
+  </script>
+
+  <script>
+    // Report content height to parent so the iframe can auto-size
+    (function() {
+      var lastH = 0;
+      function report() {
+        var h = document.documentElement.scrollHeight;
+        if (h !== lastH) { lastH = h; window.parent.postMessage({ type: 'resize', height: h }, '*'); }
+      }
+      // Observe ongoing layout changes (data loading, chart rendering)
+      if (typeof ResizeObserver !== 'undefined') {
+        new ResizeObserver(report).observe(document.getElementById('root'));
+      }
+      // Initial report after first paint
+      requestAnimationFrame(function() { requestAnimationFrame(report); });
+    })();
+  </script>
+</body>
+</html>

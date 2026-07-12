@@ -1,0 +1,1 @@
+(function(){try{var d=document.documentElement;var t=localStorage.getItem('satori-theme');if(t==='light');else if(!t&&window.matchMedia('(prefers-color-scheme:light)').matches);else d.classList.add('dark');if(localStorage.getItem('satori-sidebar')==='collapsed')d.classList.add('sidebar-collapsed')}catch(e){}})()

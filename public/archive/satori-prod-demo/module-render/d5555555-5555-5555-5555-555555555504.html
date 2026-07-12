@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Inventory &amp; Stockouts</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* Satori design tokens */
+    :root {
+      --satori-bg-deepest: #FFFFFF;
+      --satori-bg-panel: #FAFAFA;
+      --satori-bg-hover: #F5F5F5;
+      --satori-bg-border: #EAEAEA;
+      --satori-text-primary: #000000;
+      --satori-text-body: #333333;
+      --satori-text-secondary: #666666;
+      --satori-text-muted: #999999;
+      --satori-text-hint: #CCCCCC;
+      --satori-btn-bg: #000000;
+      --satori-btn-text: #FFFFFF;
+    }
+    .dark {
+      --satori-bg-deepest: #000000;
+      --satori-bg-panel: #111111;
+      --satori-bg-hover: #1A1A1A;
+      --satori-bg-border: #333333;
+      --satori-text-primary: #EDEDED;
+      --satori-text-body: #A1A1A1;
+      --satori-text-secondary: #888888;
+      --satori-text-muted: #555555;
+      --satori-text-hint: #333333;
+      --satori-btn-bg: #FFFFFF;
+      --satori-btn-text: #000000;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--satori-bg-deepest);
+      color: var(--satori-text-body);
+      line-height: 1.5;
+      overflow: hidden;
+    }
+    .font-sans { font-family: 'Inter', system-ui, sans-serif; }
+    .font-mono { font-family: 'Inter', system-ui, sans-serif; }
+    #root { padding: 16px; }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 4px; height: 4px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--satori-text-muted); border-radius: 3px; }
+  </style>
+  <!-- Preload hints — lets the browser discover all scripts immediately -->
+  <link rel="preload" href="/archive/satori-prod-demo/vendor/react.18.3.1.production.min.js" as="script" />
+  <link rel="preload" href="/archive/satori-prod-demo/vendor/react-dom.18.3.1.production.min.js" as="script" />
+  <link rel="preload" href="/archive/satori-prod-demo/vendor/prop-types.15.8.1.min.js" as="script" />
+  <link rel="preload" href="/archive/satori-prod-demo/vendor/recharts.2.15.3.umd.min.js" as="script" />
+  <link rel="preload" href="/archive/satori-prod-demo/vendor/lucide-react.0.344.0.umd.min.js" as="script" />
+  <!-- Version-pinned self-hosted dependencies (React 18 UMD) -->
+  <script src="/archive/satori-prod-demo/vendor/react.18.3.1.production.min.js"></script>
+  <script src="/archive/satori-prod-demo/vendor/react-dom.18.3.1.production.min.js"></script>
+  <script src="/archive/satori-prod-demo/vendor/prop-types.15.8.1.min.js"></script>
+  <script>
+    // lucide-react UMD expects window.react (lowercase). React UMD sets window.React (uppercase).
+    window.react = window.React;
+  </script>
+  <script src="/archive/satori-prod-demo/vendor/recharts.2.15.3.umd.min.js"></script>
+  <script src="/archive/satori-prod-demo/vendor/lucide-react.0.344.0.umd.min.js"></script>
+  <script>
+    // Expose library exports as globals so agent-generated code can
+    // reference them as bare variables without explicit imports.
+    // Only set properties that don't already exist on window to avoid
+    // shadowing built-in globals (e.g. Map, Infinity, Set from lucide).
+    function _exposeGlobals(ns) {
+      if (!ns) return;
+      for (var k in ns) {
+        if (!(k in window)) {
+          try { window[k] = ns[k]; } catch(e) {}
+        }
+      }
+    }
+    _exposeGlobals(window.Recharts);
+    _exposeGlobals(window.LucideReact);
+  </script>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script>
+  // Satori component implementations (inline, no Tailwind dependency)
+  window.__SATORI__ = (function() {
+    var h = React.createElement;
+
+    function SatoriPanel(props) {
+      var style = {
+        background: 'var(--satori-bg-panel)',
+        border: '1px solid var(--satori-bg-border)',
+        borderRadius: '4px',
+        padding: '16px',
+      };
+      // Accept both header={{ title, actions }} and title="..." + actions={...}
+      var headerTitle = props.header ? props.header.title : props.title;
+      var headerActions = props.header ? props.header.actions : props.actions;
+      return h('div', { style: style },
+        headerTitle ? h('div', { style: {
+          display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+          paddingBottom: '12px', marginBottom: '12px',
+          borderBottom: '1px solid var(--satori-bg-border)',
+          fontFamily: "'Inter', system-ui, sans-serif",
+          fontSize: '16px', fontWeight: 600, lineHeight: '24px',
+          color: 'var(--satori-text-primary)',
+        }},
+          h('span', null, headerTitle),
+          headerActions
+        ) : null,
+        props.children
+      );
+    }
+
+    function SatoriKPI(props) {
+      // Normalize trend: accept string, number, or object { value, direction }.
+      var trend = props.trend;
+      var trendDir = props.trendDirection;
+      var trendText = null;
+      if (trend != null && typeof trend === 'object') {
+        trendText = trend.value || trend.label || trend.text || JSON.stringify(trend);
+        trendDir = trendDir || trend.direction || trend.trendDirection;
+      } else {
+        trendText = trend;
+      }
+      var trendColor = trendDir === 'up' ? '#22c55e'
+        : trendDir === 'down' ? '#ef4444' : 'var(--satori-text-secondary)';
+      return h(SatoriPanel, null,
+        h('div', { style: { fontFamily: "'Inter', system-ui, sans-serif", fontSize: '11px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', lineHeight: '16px', color: 'var(--satori-text-secondary)' }}, props.label),
+        h('div', { style: { fontFamily: "'Inter', system-ui, sans-serif", fontSize: '28px', fontWeight: 600, lineHeight: '36px', color: 'var(--satori-text-primary)', marginTop: '4px', fontVariantNumeric: 'tabular-nums' }}, props.value),
+        trendText != null ? h('div', { style: { display: 'flex', alignItems: 'center', gap: '4px', marginTop: '4px' }},
+          h('span', { style: { width: '5px', height: '5px', background: trendColor, display: 'inline-block' }}),
+          h('span', { style: { fontFamily: "'Inter', system-ui, sans-serif", fontSize: '12px', lineHeight: '16px', color: trendColor }}, String(trendText))
+        ) : null
+      );
+    }
+
+    function SatoriDataValue(props) {
+      var style = { fontFamily: "'Inter', system-ui, sans-serif", fontSize: '13px', lineHeight: '20px', fontVariantNumeric: 'tabular-nums', color: 'var(--satori-text-body)' };
+      return h('span', { style: style }, props.children || props.value);
+    }
+
+    function SatoriEmpty(props) {
+      return h('div', { style: { display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '32px', gap: '8px' }},
+        h('div', { style: { color: 'var(--satori-text-muted)', fontSize: '14px', lineHeight: '20px', textAlign: 'center' }}, props.message || 'No data'),
+        props.action ? h('button', { onClick: props.onAction, style: { background: 'none', border: 'none', color: '#3b82f6', fontSize: '14px', cursor: 'pointer' }}, props.action) : null
+      );
+    }
+
+    function SatoriError(props) {
+      return h('div', { style: { display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '32px', gap: '8px' }},
+        h('div', { style: { width: '5px', height: '5px', background: '#ef4444', display: 'inline-block' }}),
+        h('div', { style: { color: '#ef4444', fontFamily: "'Inter', system-ui, sans-serif", fontSize: '13px', lineHeight: '20px', textAlign: 'center' }}, props.message || 'An error occurred'),
+        props.detail ? h('div', { style: { color: 'var(--satori-text-muted)', fontSize: '12px', lineHeight: '16px', textAlign: 'center', maxWidth: '400px' }}, props.detail) : null,
+        props.onRetry ? h('button', { onClick: props.onRetry, style: { background: 'none', border: '1px solid var(--satori-bg-border)', borderRadius: '4px', padding: '4px 12px', color: 'var(--satori-text-body)', fontSize: '13px', cursor: 'pointer', marginTop: '8px' }}, 'Retry') : null
+      );
+    }
+
+    return { SatoriPanel: SatoriPanel, SatoriKPI: SatoriKPI, SatoriDataValue: SatoriDataValue, SatoriEmpty: SatoriEmpty, SatoriError: SatoriError };
+  })();
+  </script>
+
+  <script>
+    // Theme sync from parent
+    window.addEventListener('message', function(e) {
+      if (e.data && e.data.type === 'theme') {
+        document.documentElement.classList.toggle('dark', e.data.dark);
+      }
+    });
+    // Request initial theme
+    window.parent.postMessage({ type: 'theme_request' }, '*');
+
+    // Global error trap — catches ALL uncaught errors including those
+    // that escape React's error boundary (e.g. errors in event handlers,
+    // async callbacks, or swallowed-then-rethrown exceptions).
+    var _errorReported = false;
+    window.onerror = function(msg, src, line, col, err) {
+      if (_errorReported) return;
+      _errorReported = true;
+      window.parent.postMessage({
+        type: 'runtime_error',
+        errors: [String(err ? err.message : msg)]
+      }, '*');
+    };
+    window.addEventListener('unhandledrejection', function(e) {
+      if (_errorReported) return;
+      _errorReported = true;
+      var msg = e.reason ? String(e.reason.message || e.reason) : 'Unhandled promise rejection';
+      window.parent.postMessage({
+        type: 'runtime_error',
+        errors: [msg]
+      }, '*');
+    });
+  </script>
+
+  <!-- Compiled module bundle -->
+  <script>var __MODULE__=(()=>{var d=Object.defineProperty;var h=Object.getOwnPropertyDescriptor;var k=Object.getOwnPropertyNames;var C=Object.prototype.hasOwnProperty;var K=(e,a)=>{for(var r in a)d(e,r,{get:a[r],enumerable:!0})},w=(e,a,r,n)=>{if(a&&typeof a=="object"||typeof a=="function")for(let o of k(a))!C.call(e,o)&&o!==r&&d(e,o,{get:()=>a[o],enumerable:!(n=h(a,o))||n.enumerable});return e};var z=e=>w(d({},"__esModule",{value:!0}),e);var U={};K(U,{default:()=>u});function u(){let{SatoriPanel:e,SatoriKPI:a}=window.__SATORI__,{BarChart:r,Bar:n,XAxis:o,YAxis:g,CartesianGrid:v,ResponsiveContainer:x,Tooltip:b}=window.Recharts,S=[{label:"SKUs on hand",value:"2,418",trend:"+42 SKUs",trendDirection:"up"},{label:"Inventory value",value:"$24.1M",trend:"-$380K",trendDirection:"up"},{label:"SKUs at stockout risk",value:"37",trend:"+8 this week",trendDirection:"down"},{label:"Slow movers (>90d)",value:"184",trend:"-22 vs last mo.",trendDirection:"up"}],f=[{category:"Raw alloys",value:8420},{category:"Machined parts",value:6120},{category:"Packaging",value:3480},{category:"Electrical",value:2910},{category:"Coatings",value:1870},{category:"MRO consumables",value:1240}],l=[{sku:"SKU-48219",desc:"Alloy bracket 12mm",onHand:142,reorder:500,daysCover:4,status:"critical"},{sku:"SKU-30217",desc:"Stainless bolt M6",onHand:312,reorder:800,daysCover:7,status:"critical"},{sku:"SKU-90542",desc:"Rubber gasket 3in",onHand:84,reorder:250,daysCover:6,status:"critical"},{sku:"SKU-74108",desc:"Epoxy primer 5gal",onHand:21,reorder:60,daysCover:9,status:"warning"},{sku:"SKU-11027",desc:"Copper wire 14 AWG",onHand:410,reorder:1e3,daysCover:11,status:"warning"},{sku:"SKU-60394",desc:"Polyethylene sheet",onHand:58,reorder:120,daysCover:13,status:"warning"}],c=[{sku:"SKU-44120",desc:"Discontinued hinge assembly",onHand:1240,lastMove:"2025-10-17",value:28400},{sku:"SKU-21099",desc:"Legacy controller board",onHand:320,lastMove:"2025-11-02",value:72e3},{sku:"SKU-88501",desc:"Sample packaging run",onHand:6120,lastMove:"2025-12-14",value:11200},{sku:"SKU-33872",desc:"Prototype coating (amber)",onHand:95,lastMove:"2025-11-28",value:8900}],p={fontFamily:"Inter, sans-serif",fontSize:11,fill:"var(--satori-text-muted)"},i="var(--satori-bg-border)",m={backgroundColor:"var(--satori-bg-panel)",border:"1px solid var(--satori-bg-border)",borderRadius:3,fontSize:12,fontFamily:"Inter, sans-serif"},y=t=>t==="critical"?"#ef4444":"#f59e0b";return React.createElement("div",{style:{display:"flex",flexDirection:"column",gap:12,padding:16,fontFamily:"Inter, sans-serif"}},React.createElement("div",{style:{display:"grid",gridTemplateColumns:"repeat(auto-fit, minmax(200px, 1fr))",gap:12}},S.map(t=>React.createElement(a,{key:t.label,...t}))),React.createElement(e,{header:{title:"Inventory value by category ($K)"}},React.createElement("div",{style:{height:220}},React.createElement(x,{width:"100%",height:"100%"},React.createElement(r,{data:f,margin:{top:8,right:12,left:0,bottom:0}},React.createElement(v,{stroke:i,strokeDasharray:"2 4",vertical:!1}),React.createElement(o,{dataKey:"category",tick:{...p,fontSize:10},axisLine:{stroke:i},tickLine:!1}),React.createElement(g,{tick:{...p,fontFeatureSettings:'"tnum"'},axisLine:{stroke:i},tickLine:!1}),React.createElement(b,{contentStyle:m,formatter:t=>[`$${t.toLocaleString()}K`,"Value"]}),React.createElement(n,{dataKey:"value",fill:"#14b8a6",radius:[2,2,0,0]}))))),React.createElement(e,{header:{title:"Stockout risk \u2014 next 14 days"}},React.createElement("table",{style:{width:"100%",borderCollapse:"collapse",fontVariantNumeric:"tabular-nums"}},React.createElement("thead",null,React.createElement("tr",{style:{borderBottom:"1px solid var(--satori-bg-border)"}},["SKU","Description","On hand","Reorder pt.","Days cover","Status"].map(t=>React.createElement("th",{key:t,style:{textAlign:"left",padding:"8px 10px",fontSize:11,fontWeight:600,letterSpacing:"0.04em",textTransform:"uppercase",color:"var(--satori-text-secondary)"}},t)))),React.createElement("tbody",null,l.map((t,s)=>React.createElement("tr",{key:s,style:{borderBottom:s===l.length-1?"none":"1px solid var(--satori-bg-border)"}},React.createElement("td",{style:{padding:"8px 10px",fontSize:13,color:"var(--satori-text-primary)",fontWeight:500}},t.sku),React.createElement("td",{style:{padding:"8px 10px",fontSize:13,color:"var(--satori-text-body)"}},t.desc),React.createElement("td",{style:{padding:"8px 10px",fontSize:13,color:"var(--satori-text-body)"}},t.onHand.toLocaleString()),React.createElement("td",{style:{padding:"8px 10px",fontSize:13,color:"var(--satori-text-body)"}},t.reorder.toLocaleString()),React.createElement("td",{style:{padding:"8px 10px",fontSize:13,color:t.daysCover<=7?"#ef4444":"#f59e0b",fontWeight:500}},t.daysCover,"d"),React.createElement("td",{style:{padding:"8px 10px"}},React.createElement("span",{style:{display:"inline-flex",alignItems:"center",gap:6,fontSize:11,textTransform:"uppercase",letterSpacing:"0.04em",fontWeight:500,color:y(t.status)}},React.createElement("span",{style:{width:5,height:5,backgroundColor:y(t.status),display:"inline-block"}}),t.status))))))),React.createElement(e,{header:{title:"Slow movers \u2014 >90 days since last issue"}},React.createElement("table",{style:{width:"100%",borderCollapse:"collapse",fontVariantNumeric:"tabular-nums"}},React.createElement("thead",null,React.createElement("tr",{style:{borderBottom:"1px solid var(--satori-bg-border)"}},["SKU","Description","On hand","Last issued","Tied-up $"].map(t=>React.createElement("th",{key:t,style:{textAlign:"left",padding:"8px 10px",fontSize:11,fontWeight:600,letterSpacing:"0.04em",textTransform:"uppercase",color:"var(--satori-text-secondary)"}},t)))),React.createElement("tbody",null,c.map((t,s)=>React.createElement("tr",{key:s,style:{borderBottom:s===c.length-1?"none":"1px solid var(--satori-bg-border)"}},React.createElement("td",{style:{padding:"8px 10px",fontSize:13,color:"var(--satori-text-primary)",fontWeight:500}},t.sku),React.createElement("td",{style:{padding:"8px 10px",fontSize:13,color:"var(--satori-text-body)"}},t.desc),React.createElement("td",{style:{padding:"8px 10px",fontSize:13,color:"var(--satori-text-body)"}},t.onHand.toLocaleString()),React.createElement("td",{style:{padding:"8px 10px",fontSize:13,color:"var(--satori-text-body)"}},t.lastMove),React.createElement("td",{style:{padding:"8px 10px",fontSize:13,color:"var(--satori-text-body)"}},"$",t.value.toLocaleString())))))))}return z(U);})();
+</script>
+
+  <script>
+    // React Error Boundary — catches runtime crashes after initial mount
+    // (e.g. null reference errors in useMemo when data arrives).
+    var _ErrorBoundary = (function() {
+      function EB(props) {
+        React.Component.call(this, props);
+        this.state = { error: null };
+      }
+      EB.prototype = Object.create(React.Component.prototype);
+      EB.prototype.constructor = EB;
+      EB.getDerivedStateFromError = function(error) {
+        return { error: error };
+      };
+      EB.prototype.componentDidCatch = function(error, info) {
+        var msg = String(error.message || error);
+        var stack = info && info.componentStack ? info.componentStack.trim().split('\n').slice(0, 3).join(' > ') : '';
+        // Notify parent so ModuleIframe can show the error + fix button.
+        window.parent.postMessage({
+          type: 'runtime_error',
+          errors: [msg],
+          stack: stack
+        }, '*');
+      };
+      EB.prototype.render = function() {
+        if (this.state.error) {
+          // Render null — the parent handles the error UI.
+          // No visible element means no ResizeObserver jank.
+          return null;
+        }
+        return this.props.children;
+      };
+      return EB;
+    })();
+
+    // Mount the module component wrapped in the error boundary
+    try {
+      var root = ReactDOM.createRoot(document.getElementById('root'));
+      root.render(
+        React.createElement(_ErrorBoundary, null,
+          React.createElement(__MODULE__.default)
+        )
+      );
+    } catch (err) {
+      var safeMsg = String(err.message || err).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+      document.getElementById('root').innerHTML =
+        '<div style="font-family:Inter,system-ui,sans-serif;padding:16px;color:#ef4444;">' +
+        '<h3>Runtime Error</h3><pre>' + safeMsg + '</pre></div>';
+      window.parent.postMessage({ type: 'runtime_error', errors: [String(err.message || err)] }, '*');
+    }
+  </script>
+
+  <script>
+    // Report content height to parent so the iframe can auto-size
+    (function() {
+      var lastH = 0;
+      function report() {
+        var h = document.documentElement.scrollHeight;
+        if (h !== lastH) { lastH = h; window.parent.postMessage({ type: 'resize', height: h }, '*'); }
+      }
+      // Observe ongoing layout changes (data loading, chart rendering)
+      if (typeof ResizeObserver !== 'undefined') {
+        new ResizeObserver(report).observe(document.getElementById('root'));
+      }
+      // Initial report after first paint
+      requestAnimationFrame(function() { requestAnimationFrame(report); });
+    })();
+  </script>
+</body>
+</html>

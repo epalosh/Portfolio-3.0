@@ -1,0 +1,62 @@
+1:"$Sreact.fragment"
+a:I[7150,[],""]
+:HL["/archive/satori/_next/static/css/68611f82ee6e9242.css","style"]
+2:T4ec,{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://satori-inference.com/#organization","name":"Satori Inference","url":"https://satori-inference.com","logo":{"@type":"ImageObject","url":"https://satori-inference.com/icon.svg","caption":"Satori Inference"},"image":"https://satori-inference.com/satori-og.png"},{"@type":"WebSite","@id":"https://satori-inference.com/#website","url":"https://satori-inference.com","name":"Satori Inference: The Agentic Data Platform for Manufacturing","description":"Satori Inference unifies data across your ERP, MES, spreadsheets, and databases — then builds custom analytics software on-demand.","publisher":{"@id":"https://satori-inference.com/#organization"},"inLanguage":"en-US"},{"@type":"WebPage","@id":"https://satori-inference.com/#webpage","url":"https://satori-inference.com","name":"Satori Inference: The Agentic Data Platform for Manufacturing","description":"Satori Inference unifies data across your ERP, MES, spreadsheets, and databases — then builds custom analytics software on-demand.","isPartOf":{"@id":"https://satori-inference.com/#website"},"primaryImageOfPage":"https://satori-inference.com/satori-og.png","about":{"@id":"https://satori-inference.com/#organization"}}]}3:T53e,
+html, body { margin: 0; padding: 0; overflow: hidden; height: 100%; background: #050505; }
+.ep-portfolio-bar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 9999;
+  height: 44px; background: #050505;
+  display: flex; align-items: center; padding: 0 24px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.ep-portfolio-bar a {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+  font-size: 13px; font-weight: 600; letter-spacing: -0.005em;
+  color: rgba(255,255,255,0.5); text-decoration: none;
+  transition: color 0.2s ease;
+}
+.ep-portfolio-bar a:hover { color: #ffffff; }
+.ep-portfolio-bar svg { width: 12px; height: 12px; flex-shrink: 0; }
+.ep-stage {
+  position: fixed;
+  top: 44px; left: 20px; right: 20px; bottom: 20px;
+  overflow: auto;
+  transform: translateZ(0);
+  -webkit-overflow-scrolling: touch;
+  z-index: 1;
+}
+.ep-frame-l, .ep-frame-r { position: fixed; top: 0; bottom: 0; width: 20px; background: #050505; z-index: 9998; }
+.ep-frame-l { left: 0; border-right: 1px solid rgba(255,255,255,0.08); }
+.ep-frame-r { right: 0; border-left: 1px solid rgba(255,255,255,0.08); }
+.ep-frame-b { position: fixed; bottom: 0; left: 0; right: 0; height: 20px; background: #050505; border-top: 1px solid rgba(255,255,255,0.08); z-index: 9998; }
+0:{"P":null,"b":"uKcaYYYnvKqEPIxP24kyL","p":"/archive/satori","c":["",""],"i":false,"f":[[["",{"children":["__PAGE__",{}]},"$undefined","$undefined",true],["",["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/archive/satori/_next/static/css/68611f82ee6e9242.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}]],["$","html",null,{"lang":"en","children":[["$","head",null,{"children":[["$","script",null,{"type":"application/ld+json","dangerouslySetInnerHTML":{"__html":"$2"}}],["$","style",null,{"dangerouslySetInnerHTML":{"__html":"$3"}}]]}],["$","body",null,{"suppressHydrationWarning":true,"children":[["$","div",null,{"className":"ep-portfolio-bar","children":["$","a",null,{"href":"/","children":[["$","svg",null,{"viewBox":"0 0 16 16","fill":"none","aria-hidden":"true","children":["$","path",null,{"d":"M13 8H3M7 12L3 8L7 4","stroke":"currentColor","strokeWidth":"1.75","strokeLinecap":"round","strokeLinejoin":"round"}]}],"ethanpalosh.com"]}]}],"$L4","$L5","$L6","$L7"]}]]}]]}],{"children":["__PAGE__","$L8",{},null,false]},null,false],"$L9",false]],"m":"$undefined","G":["$a",[]],"s":false,"S":true}
+b:I[9766,[],""]
+c:I[8924,[],""]
+d:I[4420,["239","static/chunks/239-0e0e483e5589253f.js","974","static/chunks/app/page-268bf5fe9880b631.js"],"default"]
+e:I[1631,["239","static/chunks/239-0e0e483e5589253f.js","974","static/chunks/app/page-268bf5fe9880b631.js"],"default"]
+f:I[1396,["239","static/chunks/239-0e0e483e5589253f.js","974","static/chunks/app/page-268bf5fe9880b631.js"],"default"]
+10:I[4164,["239","static/chunks/239-0e0e483e5589253f.js","974","static/chunks/app/page-268bf5fe9880b631.js"],"default"]
+11:I[7952,["239","static/chunks/239-0e0e483e5589253f.js","974","static/chunks/app/page-268bf5fe9880b631.js"],"default"]
+12:I[1948,["239","static/chunks/239-0e0e483e5589253f.js","974","static/chunks/app/page-268bf5fe9880b631.js"],"default"]
+13:I[7903,["239","static/chunks/239-0e0e483e5589253f.js","974","static/chunks/app/page-268bf5fe9880b631.js"],"TeamSection"]
+14:I[7903,["239","static/chunks/239-0e0e483e5589253f.js","974","static/chunks/app/page-268bf5fe9880b631.js"],"InvestorsSection"]
+15:I[2075,["239","static/chunks/239-0e0e483e5589253f.js","974","static/chunks/app/page-268bf5fe9880b631.js"],"default"]
+16:I[1205,["239","static/chunks/239-0e0e483e5589253f.js","974","static/chunks/app/page-268bf5fe9880b631.js"],"default"]
+17:I[8455,["239","static/chunks/239-0e0e483e5589253f.js","974","static/chunks/app/page-268bf5fe9880b631.js"],"default"]
+18:I[4431,[],"OutletBoundary"]
+1a:I[5278,[],"AsyncMetadataOutlet"]
+1c:I[4431,[],"ViewportBoundary"]
+1e:I[4431,[],"MetadataBoundary"]
+1f:"$Sreact.suspense"
+4:["$","div",null,{"className":"ep-frame-l"}]
+5:["$","div",null,{"className":"ep-frame-r"}]
+6:["$","div",null,{"className":"ep-frame-b"}]
+7:["$","div",null,{"className":"ep-stage","children":["$","$Lb",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$Lc",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[[["$","title",null,{"children":"404: This page could not be found."}],["$","div",null,{"style":{"fontFamily":"system-ui,\"Segoe UI\",Roboto,Helvetica,Arial,sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\"","height":"100vh","textAlign":"center","display":"flex","flexDirection":"column","alignItems":"center","justifyContent":"center"},"children":["$","div",null,{"children":[["$","style",null,{"dangerouslySetInnerHTML":{"__html":"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}"}}],["$","h1",null,{"className":"next-error-h1","style":{"display":"inline-block","margin":"0 20px 0 0","padding":"0 23px 0 0","fontSize":24,"fontWeight":500,"verticalAlign":"top","lineHeight":"49px"},"children":404}],["$","div",null,{"style":{"display":"inline-block"},"children":["$","h2",null,{"style":{"fontSize":14,"fontWeight":400,"lineHeight":"49px","margin":0},"children":"This page could not be found."}]}]]}]}]],[]],"forbidden":"$undefined","unauthorized":"$undefined"}]}]
+8:["$","$1","c",{"children":[[["$","div",null,{"className":"site-bg","id":"siteBg","data-grid":"on","data-glow":"on"}],["$","$Ld",null,{}],["$","$Le",null,{}],["$","$Lf",null,{}],["$","$L10",null,{}],["$","$L11",null,{}],["$","$L12",null,{}],["$","$L13",null,{}],["$","$L14",null,{}],["$","$L15",null,{}],["$","$L16",null,{}],["$","$L17",null,{}]],null,["$","$L18",null,{"children":["$L19",["$","$L1a",null,{"promise":"$@1b"}]]}]]}]
+9:["$","$1","h",{"children":[null,[["$","$L1c",null,{"children":"$L1d"}],null],["$","$L1e",null,{"children":["$","div",null,{"hidden":true,"children":["$","$1f",null,{"fallback":null,"children":"$L20"}]}]}]]}]
+1d:[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]
+19:null
+21:I[622,[],"IconMark"]
+1b:{"metadata":[["$","title","0",{"children":"Satori Inference: The Agentic Data Platform for Manufacturing"}],["$","meta","1",{"name":"description","content":"Satori Inference unifies data across your ERP, MES, spreadsheets, and databases — then builds custom analytics software on-demand."}],["$","meta","2",{"name":"keywords","content":"Satori,Satori Inference,agentic data platform,manufacturing data,natural language data query,business intelligence,no SQL analytics,AI data analytics,conversational BI"}],["$","meta","3",{"name":"robots","content":"index, follow"}],["$","link","4",{"rel":"canonical","href":"https://satori-inference.com/"}],["$","meta","5",{"property":"og:title","content":"Satori Inference: The Agentic Data Platform for Manufacturing"}],["$","meta","6",{"property":"og:description","content":"Satori Inference unifies data across your ERP, MES, spreadsheets, and databases — then builds custom analytics software on-demand."}],["$","meta","7",{"property":"og:url","content":"https://satori-inference.com/"}],["$","meta","8",{"property":"og:site_name","content":"Satori Inference"}],["$","meta","9",{"property":"og:locale","content":"en_US"}],["$","meta","10",{"property":"og:image","content":"https://satori-inference.com/satori-og.png"}],["$","meta","11",{"property":"og:image:alt","content":"Satori Inference"}],["$","meta","12",{"property":"og:type","content":"website"}],["$","meta","13",{"name":"twitter:card","content":"summary_large_image"}],["$","meta","14",{"name":"twitter:title","content":"Satori Inference: The Agentic Data Platform for Manufacturing"}],["$","meta","15",{"name":"twitter:description","content":"Satori Inference unifies data across your ERP, MES, spreadsheets, and databases — then builds custom analytics software on-demand."}],["$","meta","16",{"name":"twitter:image","content":"https://satori-inference.com/satori-og.png"}],["$","link","17",{"rel":"shortcut icon","href":"/archive/satori/icon.svg"}],["$","link","18",{"rel":"icon","href":"/archive/satori/icon.svg","type":"image/svg+xml"}],["$","link","19",{"rel":"apple-touch-icon","href":"/archive/satori/apple-icon.png","sizes":"180x180","type":"image/png"}],["$","$L21","20",{}]],"error":null,"digest":"$undefined"}
+20:"$1b:metadata"

@@ -1,0 +1,7 @@
+:HL["/archive/satori-prod-demo/_next/static/chunks/0u9ky6c07~uru.css","style"]
+:HL["/archive/satori-prod-demo/_next/static/media/83afe278b6a6bb3c-s.p.0q-301v4kxxnr.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/archive/satori-prod-demo/thumbnails/org_demo/d5555555-5555-5555-5555-555555555501.png?v=2026-04-13T22%3A10%3A00Z","image"]
+:HL["/archive/satori-prod-demo/thumbnails/org_demo/d5555555-5555-5555-5555-555555555502.png?v=2026-04-12T19%3A40%3A00Z","image"]
+:HL["/archive/satori-prod-demo/thumbnails/org_demo/d5555555-5555-5555-5555-555555555503.png?v=2026-04-11T17%3A15%3A00Z","image"]
+:HL["/archive/satori-prod-demo/thumbnails/org_demo/d5555555-5555-5555-5555-555555555504.png?v=2026-04-10T09%3A25%3A00Z","image"]
+0:{"tree":{"name":"","param":null,"prefetchHints":24,"slots":{"children":{"name":"(app)","param":null,"prefetchHints":4,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"VVjzFFKtPSNL4dBoElrpX"}

@@ -20,7 +20,7 @@ export default function Hero() {
                 </div>
                 <div className="h-name__foot">
                   <p className="h-name__blurb">
-                    Full-stack software engineer with experience working on enterprise and consumer software. Particular interests include applied AI and frontier technologies. Additional expertise in embedded systems & robotics.
+                    Full-stack software engineer with experience working on enterprise and consumer software. My particular interests include applied AI and frontier technologies. Additional expertise in embedded systems & robotics.
                   </p>
                 </div>
               </div>
@@ -157,7 +157,7 @@ export default function Hero() {
             <div className="h-writing__logos" aria-hidden="true">
               <span className="logo-slot"><img src="/images/satori-inference-logo.png" alt="" /></span>
               <span className="logo-slot"><img src="/images/oasis_logo.png" alt="" /></span>
-              <span className="logo-slot"></span>
+              <span className="logo-slot"><img src="/images/openfov-logo.png" alt="" /></span>
               <span className="logo-slot"><img src="/images/thumbnail_detailer.png" alt="" /></span>
             </div>
           </a>

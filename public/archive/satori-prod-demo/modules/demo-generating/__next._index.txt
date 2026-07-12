@@ -1,0 +1,40 @@
+1:"$Sreact.fragment"
+3:I[2534,["/archive/satori-prod-demo/_next/static/chunks/0nd07o5caommv.js","/archive/satori-prod-demo/_next/static/chunks/0pu3pwunjr_de.js"],"ThemeProvider"]
+4:I[79997,["/archive/satori-prod-demo/_next/static/chunks/0nd07o5caommv.js","/archive/satori-prod-demo/_next/static/chunks/0pu3pwunjr_de.js"],"default"]
+5:I[28177,["/archive/satori-prod-demo/_next/static/chunks/0nd07o5caommv.js","/archive/satori-prod-demo/_next/static/chunks/0pu3pwunjr_de.js"],"default"]
+:HL["/archive/satori-prod-demo/_next/static/chunks/0u9ky6c07~uru.css","style"]
+2:T631,
+html, body { margin: 0; padding: 0; overflow: hidden; height: 100%; background: #050505; }
+/* Push viewport-anchored toasts below the fixed portfolio bar (44px) so they
+   aren't clipped by the frame. Toast container reads this var, falling back to
+   1rem outside the archive. */
+html { --ep-toast-top: 60px; }
+.ep-portfolio-bar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 9999;
+  height: 44px; background: #050505;
+  display: flex; align-items: center; padding: 0 24px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.ep-portfolio-bar a {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+  font-size: 13px; font-weight: 600; letter-spacing: -0.005em;
+  color: rgba(255,255,255,0.5); text-decoration: none;
+  transition: color 0.2s ease;
+}
+.ep-portfolio-bar a:hover { color: #ffffff; }
+.ep-portfolio-bar svg { width: 12px; height: 12px; flex-shrink: 0; }
+.ep-stage {
+  position: fixed;
+  top: 44px; left: 20px; right: 20px; bottom: 20px;
+  overflow: hidden;
+  z-index: 1;
+}
+.ep-stage [data-app-root] { position: absolute; inset: 0; height: auto !important; }
+.ep-frame-l, .ep-frame-r { position: fixed; top: 0; bottom: 0; width: 20px; background: #050505; z-index: 9998; }
+.ep-frame-l { left: 0; border-right: 1px solid rgba(255,255,255,0.08); }
+.ep-frame-r { right: 0; border-left: 1px solid rgba(255,255,255,0.08); }
+.ep-frame-b { position: fixed; bottom: 0; left: 0; right: 0; height: 20px; background: #050505; border-top: 1px solid rgba(255,255,255,0.08); z-index: 9998; }
+0:{"rsc":["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/archive/satori-prod-demo/_next/static/chunks/0u9ky6c07~uru.css","precedence":"next"}],["$","script","script-0",{"src":"/archive/satori-prod-demo/_next/static/chunks/0nd07o5caommv.js","async":true}],["$","script","script-1",{"src":"/archive/satori-prod-demo/_next/static/chunks/0pu3pwunjr_de.js","async":true}]],["$","html",null,{"lang":"en","className":"inter_fe8b9d92-module__LINzvG__variable h-full antialiased","suppressHydrationWarning":true,"children":[["$","head",null,{"suppressHydrationWarning":true,"children":[["$","script",null,{"suppressHydrationWarning":true,"dangerouslySetInnerHTML":{"__html":"(function(){try{var d=document.documentElement;var t=localStorage.getItem('satori-theme');if(t==='light');else if(!t&&window.matchMedia('(prefers-color-scheme:light)').matches);else d.classList.add('dark');if(localStorage.getItem('satori-sidebar')==='collapsed')d.classList.add('sidebar-collapsed')}catch(e){}})()"}}],["$","style",null,{"dangerouslySetInnerHTML":{"__html":"$2"}}]]}],["$","body",null,{"className":"min-h-full flex flex-col bg-satori-deepest text-satori-body font-sans","children":[["$","$L3",null,{"children":[["$","div",null,{"className":"ep-portfolio-bar","children":["$","a",null,{"href":"/","children":[["$","svg",null,{"viewBox":"0 0 16 16","fill":"none","aria-hidden":"true","children":["$","path",null,{"d":"M13 8H3M7 12L3 8L7 4","stroke":"currentColor","strokeWidth":"1.75","strokeLinecap":"round","strokeLinejoin":"round"}]}],"ethanpalosh.com"]}]}],["$","div",null,{"className":"ep-frame-l"}],["$","div",null,{"className":"ep-frame-r"}],["$","div",null,{"className":"ep-frame-b"}],["$","div",null,{"className":"ep-stage","children":["$","$L4",null,{"parallelRouterKey":"children","template":["$","$L5",null,{}],"notFound":[[["$","title",null,{"children":"404: This page could not be found."}],["$","div",null,{"style":{"fontFamily":"system-ui,\"Segoe UI\",Roboto,Helvetica,Arial,sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\"","height":"100vh","textAlign":"center","display":"flex","flexDirection":"column","alignItems":"center","justifyContent":"center"},"children":"$L6"}]],[]]}]}]]}],"$L7"]}]]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"VVjzFFKtPSNL4dBoElrpX"}
+6:["$","div",null,{"children":[["$","style",null,{"dangerouslySetInnerHTML":{"__html":"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}"}}],["$","h1",null,{"className":"next-error-h1","style":{"display":"inline-block","margin":"0 20px 0 0","padding":"0 23px 0 0","fontSize":24,"fontWeight":500,"verticalAlign":"top","lineHeight":"49px"},"children":404}],["$","div",null,{"style":{"display":"inline-block"},"children":["$","h2",null,{"style":{"fontSize":14,"fontWeight":400,"lineHeight":"49px","margin":0},"children":"This page could not be found."}]}]]}]
+7:["$","footer",null,{"aria-label":"build version","className":"pointer-events-none fixed bottom-2 right-3 font-mono text-[10px] text-satori-secondary/60 tabular-nums","children":"dev"}]

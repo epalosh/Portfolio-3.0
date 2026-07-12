@@ -31,17 +31,17 @@ export const metadata: Metadata = {
   ),
   title: 'Ethan Palosh — Software Engineer',
   description:
-    'Full-stack software engineer with experience working on enterprise and consumer software. Particular interests include applied AI and frontier technologies. Additional expertise in embedded systems & robotics.',
+    'Full-stack software engineer with experience working on enterprise and consumer software. My particular interests include applied AI and frontier technologies. Additional expertise in embedded systems & robotics.',
   openGraph: {
     title: 'Ethan Palosh | Software Engineer',
-    description: 'Full-stack software engineer with experience working on enterprise and consumer software. Particular interests include applied AI and frontier technologies. Additional expertise in embedded systems & robotics.',
+    description: 'Full-stack software engineer with experience working on enterprise and consumer software. My particular interests include applied AI and frontier technologies. Additional expertise in embedded systems & robotics.',
     type: 'website',
     images: [{ url: '/images/SharingPreview.png' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Ethan Palosh | Software Engineer',
-    description: 'Full-stack software engineer with experience working on enterprise and consumer software. Particular interests include applied AI and frontier technologies. Additional expertise in embedded systems & robotics.',
+    description: 'Full-stack software engineer with experience working on enterprise and consumer software. My particular interests include applied AI and frontier technologies. Additional expertise in embedded systems & robotics.',
     images: ['/images/SharingPreview.png'],
   },
 }

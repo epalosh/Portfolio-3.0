@@ -23,7 +23,7 @@ export default function Experience() {
     <section className="section" id="experience">
       <div className="wrap">
         <div className="sechead reveal">
-          <h2>Experience</h2>
+          <h2>Professional Experience</h2>
         </div>
 
         <div className="timeline reveal">

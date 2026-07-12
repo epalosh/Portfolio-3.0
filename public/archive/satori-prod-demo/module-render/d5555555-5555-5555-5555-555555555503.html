@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Supplier Scorecard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* Satori design tokens */
+    :root {
+      --satori-bg-deepest: #FFFFFF;
+      --satori-bg-panel: #FAFAFA;
+      --satori-bg-hover: #F5F5F5;
+      --satori-bg-border: #EAEAEA;
+      --satori-text-primary: #000000;
+      --satori-text-body: #333333;
+      --satori-text-secondary: #666666;
+      --satori-text-muted: #999999;
+      --satori-text-hint: #CCCCCC;
+      --satori-btn-bg: #000000;
+      --satori-btn-text: #FFFFFF;
+    }
+    .dark {
+      --satori-bg-deepest: #000000;
+      --satori-bg-panel: #111111;
+      --satori-bg-hover: #1A1A1A;
+      --satori-bg-border: #333333;
+      --satori-text-primary: #EDEDED;
+      --satori-text-body: #A1A1A1;
+      --satori-text-secondary: #888888;
+      --satori-text-muted: #555555;
+      --satori-text-hint: #333333;
+      --satori-btn-bg: #FFFFFF;
+      --satori-btn-text: #000000;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--satori-bg-deepest);
+      color: var(--satori-text-body);
+      line-height: 1.5;
+      overflow: hidden;
+    }
+    .font-sans { font-family: 'Inter', system-ui, sans-serif; }
+    .font-mono { font-family: 'Inter', system-ui, sans-serif; }
+    #root { padding: 16px; }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 4px; height: 4px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--satori-text-muted); border-radius: 3px; }
+  </style>
+  <!-- Preload hints — lets the browser discover all scripts immediately -->
+  <link rel="preload" href="/archive/satori-prod-demo/vendor/react.18.3.1.production.min.js" as="script" />
+  <link rel="preload" href="/archive/satori-prod-demo/vendor/react-dom.18.3.1.production.min.js" as="script" />
+  <link rel="preload" href="/archive/satori-prod-demo/vendor/prop-types.15.8.1.min.js" as="script" />
+  <link rel="preload" href="/archive/satori-prod-demo/vendor/recharts.2.15.3.umd.min.js" as="script" />
+  <link rel="preload" href="/archive/satori-prod-demo/vendor/lucide-react.0.344.0.umd.min.js" as="script" />
+  <!-- Version-pinned self-hosted dependencies (React 18 UMD) -->
+  <script src="/archive/satori-prod-demo/vendor/react.18.3.1.production.min.js"></script>
+  <script src="/archive/satori-prod-demo/vendor/react-dom.18.3.1.production.min.js"></script>
+  <script src="/archive/satori-prod-demo/vendor/prop-types.15.8.1.min.js"></script>
+  <script>
+    // lucide-react UMD expects window.react (lowercase). React UMD sets window.React (uppercase).
+    window.react = window.React;
+  </script>
+  <script src="/archive/satori-prod-demo/vendor/recharts.2.15.3.umd.min.js"></script>
+  <script src="/archive/satori-prod-demo/vendor/lucide-react.0.344.0.umd.min.js"></script>
+  <script>
+    // Expose library exports as globals so agent-generated code can
+    // reference them as bare variables without explicit imports.
+    // Only set properties that don't already exist on window to avoid
+    // shadowing built-in globals (e.g. Map, Infinity, Set from lucide).
+    function _exposeGlobals(ns) {
+      if (!ns) return;
+      for (var k in ns) {
+        if (!(k in window)) {
+          try { window[k] = ns[k]; } catch(e) {}
+        }
+      }
+    }
+    _exposeGlobals(window.Recharts);
+    _exposeGlobals(window.LucideReact);
+  </script>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script>
+  // Satori component implementations (inline, no Tailwind dependency)
+  window.__SATORI__ = (function() {
+    var h = React.createElement;
+
+    function SatoriPanel(props) {
+      var style = {
+        background: 'var(--satori-bg-panel)',
+        border: '1px solid var(--satori-bg-border)',
+        borderRadius: '4px',
+        padding: '16px',
+      };
+      // Accept both header={{ title, actions }} and title="..." + actions={...}
+      var headerTitle = props.header ? props.header.title : props.title;
+      var headerActions = props.header ? props.header.actions : props.actions;
+      return h('div', { style: style },
+        headerTitle ? h('div', { style: {
+          display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+          paddingBottom: '12px', marginBottom: '12px',
+          borderBottom: '1px solid var(--satori-bg-border)',
+          fontFamily: "'Inter', system-ui, sans-serif",
+          fontSize: '16px', fontWeight: 600, lineHeight: '24px',
+          color: 'var(--satori-text-primary)',
+        }},
+          h('span', null, headerTitle),
+          headerActions
+        ) : null,
+        props.children
+      );
+    }
+
+    function SatoriKPI(props) {
+      // Normalize trend: accept string, number, or object { value, direction }.
+      var trend = props.trend;
+      var trendDir = props.trendDirection;
+      var trendText = null;
+      if (trend != null && typeof trend === 'object') {
+        trendText = trend.value || trend.label || trend.text || JSON.stringify(trend);
+        trendDir = trendDir || trend.direction || trend.trendDirection;
+      } else {
+        trendText = trend;
+      }
+      var trendColor = trendDir === 'up' ? '#22c55e'
+        : trendDir === 'down' ? '#ef4444' : 'var(--satori-text-secondary)';
+      return h(SatoriPanel, null,
+        h('div', { style: { fontFamily: "'Inter', system-ui, sans-serif", fontSize: '11px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', lineHeight: '16px', color: 'var(--satori-text-secondary)' }}, props.label),
+        h('div', { style: { fontFamily: "'Inter', system-ui, sans-serif", fontSize: '28px', fontWeight: 600, lineHeight: '36px', color: 'var(--satori-text-primary)', marginTop: '4px', fontVariantNumeric: 'tabular-nums' }}, props.value),
+        trendText != null ? h('div', { style: { display: 'flex', alignItems: 'center', gap: '4px', marginTop: '4px' }},
+          h('span', { style: { width: '5px', height: '5px', background: trendColor, display: 'inline-block' }}),
+          h('span', { style: { fontFamily: "'Inter', system-ui, sans-serif", fontSize: '12px', lineHeight: '16px', color: trendColor }}, String(trendText))
+        ) : null
+      );
+    }
+
+    function SatoriDataValue(props) {
+      var style = { fontFamily: "'Inter', system-ui, sans-serif", fontSize: '13px', lineHeight: '20px', fontVariantNumeric: 'tabular-nums', color: 'var(--satori-text-body)' };
+      return h('span', { style: style }, props.children || props.value);
+    }
+
+    function SatoriEmpty(props) {
+      return h('div', { style: { display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '32px', gap: '8px' }},
+        h('div', { style: { color: 'var(--satori-text-muted)', fontSize: '14px', lineHeight: '20px', textAlign: 'center' }}, props.message || 'No data'),
+        props.action ? h('button', { onClick: props.onAction, style: { background: 'none', border: 'none', color: '#3b82f6', fontSize: '14px', cursor: 'pointer' }}, props.action) : null
+      );
+    }
+
+    function SatoriError(props) {
+      return h('div', { style: { display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '32px', gap: '8px' }},
+        h('div', { style: { width: '5px', height: '5px', background: '#ef4444', display: 'inline-block' }}),
+        h('div', { style: { color: '#ef4444', fontFamily: "'Inter', system-ui, sans-serif", fontSize: '13px', lineHeight: '20px', textAlign: 'center' }}, props.message || 'An error occurred'),
+        props.detail ? h('div', { style: { color: 'var(--satori-text-muted)', fontSize: '12px', lineHeight: '16px', textAlign: 'center', maxWidth: '400px' }}, props.detail) : null,
+        props.onRetry ? h('button', { onClick: props.onRetry, style: { background: 'none', border: '1px solid var(--satori-bg-border)', borderRadius: '4px', padding: '4px 12px', color: 'var(--satori-text-body)', fontSize: '13px', cursor: 'pointer', marginTop: '8px' }}, 'Retry') : null
+      );
+    }
+
+    return { SatoriPanel: SatoriPanel, SatoriKPI: SatoriKPI, SatoriDataValue: SatoriDataValue, SatoriEmpty: SatoriEmpty, SatoriError: SatoriError };
+  })();
+  </script>
+
+  <script>
+    // Theme sync from parent
+    window.addEventListener('message', function(e) {
+      if (e.data && e.data.type === 'theme') {
+        document.documentElement.classList.toggle('dark', e.data.dark);
+      }
+    });
+    // Request initial theme
+    window.parent.postMessage({ type: 'theme_request' }, '*');
+
+    // Global error trap — catches ALL uncaught errors including those
+    // that escape React's error boundary (e.g. errors in event handlers,
+    // async callbacks, or swallowed-then-rethrown exceptions).
+    var _errorReported = false;
+    window.onerror = function(msg, src, line, col, err) {
+      if (_errorReported) return;
+      _errorReported = true;
+      window.parent.postMessage({
+        type: 'runtime_error',
+        errors: [String(err ? err.message : msg)]
+      }, '*');
+    };
+    window.addEventListener('unhandledrejection', function(e) {
+      if (_errorReported) return;
+      _errorReported = true;
+      var msg = e.reason ? String(e.reason.message || e.reason) : 'Unhandled promise rejection';
+      window.parent.postMessage({
+        type: 'runtime_error',
+        errors: [msg]
+      }, '*');
+    });
+  </script>
+
+  <!-- Compiled module bundle -->
+  <script>var __MODULE__=(()=>{var d=Object.defineProperty;var P=Object.getOwnPropertyDescriptor;var k=Object.getOwnPropertyNames;var R=Object.prototype.hasOwnProperty;var A=(t,i)=>{for(var r in i)d(t,r,{get:i[r],enumerable:!0})},w=(t,i,r,o)=>{if(i&&typeof i=="object"||typeof i=="function")for(let a of k(i))!R.call(t,a)&&a!==r&&d(t,a,{get:()=>i[a],enumerable:!(o=P(i,a))||o.enumerable});return t};var I=t=>w(d({},"__esModule",{value:!0}),t);var D={};A(D,{default:()=>y});function y(){let{SatoriPanel:t,SatoriKPI:i}=window.__SATORI__,{RadarChart:r,PolarGrid:o,PolarAngleAxis:a,PolarRadiusAxis:m,Radar:u,PieChart:x,Pie:v,Cell:h,ResponsiveContainer:p,Tooltip:c,Legend:z}=window.Recharts,b=[{label:"Active suppliers",value:"84",trend:"+3 vs Q4",trendDirection:"up"},{label:"OTIF (trailing 90d)",value:"91.8%",trend:"+0.9 pts",trendDirection:"up"},{label:"Defect rate (PPM)",value:"1,420",trend:"-210 PPM",trendDirection:"up"},{label:"Single-source risk",value:"12",trend:"-3 SKUs",trendDirection:"up"}],S=[{axis:"OTIF",score:92},{axis:"Quality",score:85},{axis:"Cost stability",score:78},{axis:"Lead time",score:81},{axis:"Responsiveness",score:88}],n=[{tier:"Tier A \u2014 Strategic",spend:10540,color:"#22c55e"},{tier:"Tier B \u2014 Preferred",spend:8220,color:"#3b82f6"},{tier:"Tier C \u2014 Transactional",spend:4380,color:"#f59e0b"},{tier:"Tier D \u2014 Watchlist",spend:1960,color:"#ef4444"}],C=n.reduce((e,l)=>e+l.spend,0),f=[{name:"Midstate Alloys",spend:4820,tier:"A",otif:96.1},{name:"Keystone Precision",spend:3910,tier:"A",otif:94.8},{name:"Coastal Fabricators",spend:3340,tier:"B",otif:92.5},{name:"Northpeak Coatings",spend:2780,tier:"B",otif:90.2},{name:"Tri-Axis Bearings",spend:2410,tier:"C",otif:88.1},{name:"Quadrant Packaging",spend:1960,tier:"D",otif:86.4}],T=Math.max(...f.map(e=>e.spend)),s=e=>e==="A"?"#22c55e":e==="B"?"#3b82f6":e==="C"?"#f59e0b":"#ef4444",g={backgroundColor:"var(--satori-bg-panel)",border:"1px solid var(--satori-bg-border)",borderRadius:3,fontSize:12,fontFamily:"Inter, sans-serif"};return React.createElement("div",{style:{display:"flex",flexDirection:"column",gap:12,padding:16,fontFamily:"Inter, sans-serif"}},React.createElement("div",{style:{display:"grid",gridTemplateColumns:"repeat(auto-fit, minmax(200px, 1fr))",gap:12}},b.map(e=>React.createElement(i,{key:e.label,...e}))),React.createElement("div",{style:{display:"grid",gridTemplateColumns:"minmax(0, 5fr) minmax(0, 4fr)",gap:12}},React.createElement(t,{header:{title:"Supplier base \u2014 performance profile"}},React.createElement("div",{style:{height:300}},React.createElement(p,{width:"100%",height:"100%"},React.createElement(r,{data:S,cx:"50%",cy:"52%",outerRadius:"75%"},React.createElement(o,{stroke:"var(--satori-bg-border)"}),React.createElement(a,{dataKey:"axis",tick:{fontFamily:"Inter, sans-serif",fontSize:11,fill:"var(--satori-text-body)"}}),React.createElement(m,{angle:90,domain:[0,100],tick:{fontFamily:"Inter, sans-serif",fontSize:10,fill:"var(--satori-text-muted)",fontFeatureSettings:'"tnum"'},axisLine:!1}),React.createElement(u,{name:"Avg score",dataKey:"score",stroke:"#14b8a6",fill:"#14b8a6",fillOpacity:.25,strokeWidth:1.75}),React.createElement(c,{contentStyle:g,formatter:e=>[`${e} / 100`,"Score"]}))))),React.createElement(t,{header:{title:"Spend by tier (trailing 90d)"}},React.createElement("div",{style:{height:300,display:"flex",flexDirection:"column"}},React.createElement("div",{style:{flex:1,position:"relative"}},React.createElement(p,{width:"100%",height:"100%"},React.createElement(x,null,React.createElement(v,{data:n,dataKey:"spend",innerRadius:52,outerRadius:86,paddingAngle:2,stroke:"var(--satori-bg-panel)",strokeWidth:2},n.map((e,l)=>React.createElement(h,{key:l,fill:e.color}))),React.createElement(c,{contentStyle:g,formatter:e=>[`$${e.toLocaleString()}K`,"Spend"]}))),React.createElement("div",{style:{position:"absolute",inset:0,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",pointerEvents:"none"}},React.createElement("span",{style:{fontSize:11,textTransform:"uppercase",letterSpacing:"0.05em",color:"var(--satori-text-secondary)",fontWeight:600}},"Total spend"),React.createElement("span",{style:{fontSize:22,fontWeight:600,fontVariantNumeric:"tabular-nums",color:"var(--satori-text-primary)",marginTop:2}},"$",(C/1e3).toFixed(1),"M"))),React.createElement("div",{style:{display:"flex",flexDirection:"column",gap:4,paddingTop:8,borderTop:"1px solid var(--satori-bg-border)",marginTop:8}},n.map(e=>React.createElement("div",{key:e.tier,style:{display:"flex",alignItems:"center",gap:8}},React.createElement("span",{style:{width:8,height:8,backgroundColor:e.color,flex:"none"}}),React.createElement("span",{style:{flex:1,fontSize:11,color:"var(--satori-text-body)"}},e.tier),React.createElement("span",{style:{fontSize:11,fontVariantNumeric:"tabular-nums",color:"var(--satori-text-primary)",fontWeight:500}},"$",e.spend.toLocaleString(),"K"))))))),React.createElement(t,{header:{title:"Top suppliers by spend"}},React.createElement("div",{style:{display:"flex",flexDirection:"column",gap:8,padding:"4px 4px 8px"}},f.map(e=>React.createElement("div",{key:e.name,style:{display:"flex",alignItems:"center",gap:10,fontVariantNumeric:"tabular-nums"}},React.createElement("span",{style:{width:20,height:20,display:"inline-flex",alignItems:"center",justifyContent:"center",fontSize:11,fontWeight:600,color:s(e.tier),border:`1px solid ${s(e.tier)}`,borderRadius:3,flex:"none"}},e.tier),React.createElement("span",{style:{width:170,fontSize:13,fontWeight:500,color:"var(--satori-text-primary)",flex:"none"}},e.name),React.createElement("div",{style:{flex:1,height:18,position:"relative",backgroundColor:"var(--satori-bg-border)",borderRadius:2,overflow:"hidden"}},React.createElement("div",{style:{width:`${e.spend/T*100}%`,height:"100%",backgroundColor:s(e.tier),opacity:.75}})),React.createElement("span",{style:{width:70,textAlign:"right",fontSize:13,color:"var(--satori-text-body)"}},"$",e.spend.toLocaleString(),"K"),React.createElement("span",{style:{width:60,textAlign:"right",fontSize:12,color:"var(--satori-text-muted)"}},e.otif.toFixed(1),"% OTIF"))))))}return I(D);})();
+</script>
+
+  <script>
+    // React Error Boundary — catches runtime crashes after initial mount
+    // (e.g. null reference errors in useMemo when data arrives).
+    var _ErrorBoundary = (function() {
+      function EB(props) {
+        React.Component.call(this, props);
+        this.state = { error: null };
+      }
+      EB.prototype = Object.create(React.Component.prototype);
+      EB.prototype.constructor = EB;
+      EB.getDerivedStateFromError = function(error) {
+        return { error: error };
+      };
+      EB.prototype.componentDidCatch = function(error, info) {
+        var msg = String(error.message || error);
+        var stack = info && info.componentStack ? info.componentStack.trim().split('\n').slice(0, 3).join(' > ') : '';
+        // Notify parent so ModuleIframe can show the error + fix button.
+        window.parent.postMessage({
+          type: 'runtime_error',
+          errors: [msg],
+          stack: stack
+        }, '*');
+      };
+      EB.prototype.render = function() {
+        if (this.state.error) {
+          // Render null — the parent handles the error UI.
+          // No visible element means no ResizeObserver jank.
+          return null;
+        }
+        return this.props.children;
+      };
+      return EB;
+    })();
+
+    // Mount the module component wrapped in the error boundary
+    try {
+      var root = ReactDOM.createRoot(document.getElementById('root'));
+      root.render(
+        React.createElement(_ErrorBoundary, null,
+          React.createElement(__MODULE__.default)
+        )
+      );
+    } catch (err) {
+      var safeMsg = String(err.message || err).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+      document.getElementById('root').innerHTML =
+        '<div style="font-family:Inter,system-ui,sans-serif;padding:16px;color:#ef4444;">' +
+        '<h3>Runtime Error</h3><pre>' + safeMsg + '</pre></div>';
+      window.parent.postMessage({ type: 'runtime_error', errors: [String(err.message || err)] }, '*');
+    }
+  </script>
+
+  <script>
+    // Report content height to parent so the iframe can auto-size
+    (function() {
+      var lastH = 0;
+      function report() {
+        var h = document.documentElement.scrollHeight;
+        if (h !== lastH) { lastH = h; window.parent.postMessage({ type: 'resize', height: h }, '*'); }
+      }
+      // Observe ongoing layout changes (data loading, chart rendering)
+      if (typeof ResizeObserver !== 'undefined') {
+        new ResizeObserver(report).observe(document.getElementById('root'));
+      }
+      // Initial report after first paint
+      requestAnimationFrame(function() { requestAnimationFrame(report); });
+    })();
+  </script>
+</body>
+</html>

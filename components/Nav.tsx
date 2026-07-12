@@ -3,6 +3,13 @@ import { useEffect, useState } from 'react'
 
 const SECTIONS = ['experience', 'involvements', 'about', 'graveyard']
 
+const LABELS: Record<string, string> = {
+  about: 'About Me',
+  graveyard: 'Side Projects & Ventures',
+}
+
+const labelFor = (id: string) => LABELS[id] ?? id.charAt(0).toUpperCase() + id.slice(1)
+
 export default function Nav() {
   const [active, setActive] = useState('')
   const [menuOpen, setMenuOpen] = useState(false)
@@ -30,9 +37,7 @@ export default function Nav() {
         <nav className="nav__links nav__links--desktop" aria-label="Primary">
           {SECTIONS.map((id) => (
             <a key={id} href={`#${id}`} className={active === id ? 'active' : ''}>
-              {id === 'graveyard'
-                ? 'Projects/Ventures'
-                : id.charAt(0).toUpperCase() + id.slice(1)}
+              {labelFor(id)}
             </a>
           ))}
         </nav>
@@ -73,9 +78,7 @@ export default function Nav() {
           <nav className="nav__mobile" aria-label="Primary">
             {SECTIONS.map((id) => (
               <a key={id} href={`#${id}`} className={active === id ? 'active' : ''} onClick={close}>
-                {id === 'graveyard'
-                  ? 'Projects/Ventures'
-                  : id.charAt(0).toUpperCase() + id.slice(1)}
+                {labelFor(id)}
               </a>
             ))}
             <a className="nav__cta" href="#contact" onClick={close}>

@@ -1,0 +1,6 @@
+1:I[79997,["/archive/satori-prod-demo/_next/static/chunks/0nd07o5caommv.js","/archive/satori-prod-demo/_next/static/chunks/0pu3pwunjr_de.js"],"LoadingBoundaryProvider"]
+2:"$Sreact.fragment"
+3:I[79997,["/archive/satori-prod-demo/_next/static/chunks/0nd07o5caommv.js","/archive/satori-prod-demo/_next/static/chunks/0pu3pwunjr_de.js"],"default"]
+4:I[28177,["/archive/satori-prod-demo/_next/static/chunks/0nd07o5caommv.js","/archive/satori-prod-demo/_next/static/chunks/0pu3pwunjr_de.js"],"default"]
+5:[]
+0:{"rsc":["$","$L1",null,{"loading":[["$","div","l",{"className":"flex flex-col gap-4 p-6","children":["$","div",null,{"className":"h-[400px] animate-pulse rounded border border-satori-border bg-satori-panel shadow-sm dark:shadow-none"}]}],[],[]],"children":["$","$2","c",{"children":[null,["$","$L3",null,{"parallelRouterKey":"children","template":["$","$L4",null,{}]}]]}]}],"isPartial":false,"staleTime":300,"varyParams":"$W5","buildId":"VVjzFFKtPSNL4dBoElrpX"}
