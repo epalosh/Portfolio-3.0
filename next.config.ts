@@ -9,6 +9,8 @@ const nextConfig: NextConfig = {
     return [
       { source: '/Detailer', destination: '/archive/detailer/', permanent: true },
       { source: '/Detailer/', destination: '/archive/detailer/', permanent: true },
+      { source: '/satori-inference', destination: '/archive/satori/', permanent: true },
+      { source: '/satori-inference/', destination: '/archive/satori/', permanent: true },
       { source: '/Satori', destination: '/archive/satori/', permanent: true },
       { source: '/Satori/', destination: '/archive/satori/', permanent: true },
       { source: '/satori-prod-demo', destination: '/archive/satori-prod-demo/', permanent: true },
