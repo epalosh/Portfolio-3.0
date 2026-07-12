@@ -64,7 +64,7 @@ export default function ArchitectureModal() {
                 <section className="arch-section">
                   <h3 className="arch-h">Overview</h3>
                   <p className="arch-p">
-                    Satori lets someone who is not an engineer build an interactive data visualization by
+                    Satori Inference lets someone who is not an engineer build an interactive data visualization by
                     describing it in plain language. A user connects a data source such as a Postgres database, a
                     warehouse, or a Google Sheet, then types a request. An AI agent then turns that into a
                     working visualization that runs live against the user&rsquo;s real data and can be shared with
