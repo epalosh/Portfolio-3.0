@@ -11,7 +11,7 @@ interface Milestone {
 const milestones: Milestone[] = [
   { title: 'Detailer', role: 'Solo Developer', when: 'Summer 2024', logo: '/images/thumbnail_detailer.png', href: '/Detailer' },
   { title: 'Oasis', role: 'Co-Founding Engineer', when: 'Spring 2025', logo: '/images/oasis_logo.png', href: 'https://drive.google.com/file/d/1wPBi1141VHwYWNmiUE421x3_ZUdiOig1/view' },
-  { title: 'Satori Inference', role: 'CTO', when: 'Spring 2026', logo: '/images/satori-inference-logo.png', href: '/satori-inference' },
+  { title: 'Satori Inference', role: 'CTO', when: 'Spring 2026', logo: '/images/satori-inference-logo.png', href: '/archive/satori-inference' },
   { title: 'OpenFOV', role: 'Founder (open-source)', when: 'Summer 2026', logo: '/images/openfov-logo.png', href: 'https://www.openfov.com/' },
   { title: '?', role: 'Developer', when: 'Coming Soon' },
 ]
@@ -119,7 +119,7 @@ export default function Graveyard() {
                   </svg>
                   Demo
                 </a>
-                <a className="proj__btn" href="/satori-inference" aria-label="Website">
+                <a className="proj__btn" href="/archive/satori-inference" aria-label="Website">
                   <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
                     <circle cx="8" cy="8" r="6.5" />
                     <path d="M8 1.5C8 1.5 5.5 4 5.5 8s2.5 6.5 2.5 6.5M8 1.5C8 1.5 10.5 4 10.5 8S8 14.5 8 14.5M1.5 8h13" strokeLinecap="round" />

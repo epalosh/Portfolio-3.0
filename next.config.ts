@@ -9,10 +9,6 @@ const nextConfig: NextConfig = {
     return [
       { source: '/Detailer', destination: '/archive/detailer/', permanent: true },
       { source: '/Detailer/', destination: '/archive/detailer/', permanent: true },
-      { source: '/satori-inference', destination: '/archive/satori/', permanent: true },
-      { source: '/satori-inference/', destination: '/archive/satori/', permanent: true },
-      { source: '/Satori', destination: '/archive/satori/', permanent: true },
-      { source: '/Satori/', destination: '/archive/satori/', permanent: true },
       { source: '/satori-prod-demo', destination: '/archive/satori-prod-demo/', permanent: true },
       { source: '/satori-prod-demo/', destination: '/archive/satori-prod-demo/', permanent: true },
     ]
@@ -25,8 +21,8 @@ const nextConfig: NextConfig = {
       { source: '/archive/v1.0/', destination: '/archive/v1.0/index.html' },
       { source: '/archive/v2.0', destination: '/archive/v2.0/index.html' },
       { source: '/archive/v2.0/', destination: '/archive/v2.0/index.html' },
-      { source: '/archive/satori', destination: '/archive/satori/index.html' },
-      { source: '/archive/satori/', destination: '/archive/satori/index.html' },
+      { source: '/archive/satori-inference', destination: '/archive/satori-inference/index.html' },
+      { source: '/archive/satori-inference/', destination: '/archive/satori-inference/index.html' },
       // Satori product demo — a multi-route static export. The entry serves the
       // root shell; every sub-route (/sources, /modules, /modules/[id], ...) is
       // its own pre-rendered index.html, so deep-links and hard refreshes must
