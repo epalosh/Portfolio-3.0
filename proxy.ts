@@ -14,7 +14,9 @@ export function proxy(request: NextRequest) {
   headers.delete('next-router-prefetch')
   headers.delete('next-router-segment-prefetch')
   headers.delete('next-url')
-  return NextResponse.next({ request: { headers } })
+  const response = NextResponse.rewrite(request.nextUrl, { request: { headers } })
+  response.headers.set('x-archive-proxy', 'hit')
+  return response
 }
 
 export const config = {
