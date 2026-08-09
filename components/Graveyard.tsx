@@ -71,7 +71,7 @@ export default function Graveyard() {
                 <img className="proj__logo" src="/images/openfov-logo.png" alt="" aria-hidden="true" />
                 <h3>OpenFOV</h3>
               </div>
-              <p>OpenFOV turns a single monitor setup into a VR rig using just a standard webcam. 100+ GitHub Stars, over 100k views, and 850+ upvotes on sim-racing forums. <em>My first side project with true PMF!</em></p>
+              <p>OpenFOV turns a single monitor setup into a VR rig using just a standard webcam. 100+ GitHub Stars, over 100k views, and 850+ upvotes on sim-racing forums.</p>
               <div className="proj__stack">
                 <span>Open-Source</span>
                 <span>Windows</span>
