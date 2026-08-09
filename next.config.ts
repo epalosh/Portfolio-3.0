@@ -5,6 +5,14 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: path.join(__dirname),
   },
+  // The [...slug] handler under /archive/satori-prod-demo reads the archive's
+  // RSC payload files from public/ at request time; make sure they ship with
+  // the serverless function.
+  outputFileTracingIncludes: {
+    '/archive/satori-prod-demo/[...slug]': [
+      './public/archive/satori-prod-demo/**/*.txt',
+    ],
+  },
   async redirects() {
     return [
       { source: '/Detailer', destination: '/archive/detailer/', permanent: true },
