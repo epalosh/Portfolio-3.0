@@ -2,21 +2,25 @@ import { NextRequest, NextResponse } from 'next/server'
 
 // The Satori prod demo under public/archive/ is a static Next.js export with
 // its own client-side router. Its navigations fetch pre-rendered payload files
-// (__next.*.txt) with RSC request headers set; on Vercel those headers make the
-// platform treat the request as a data request for THIS app — skipping the
-// public/ file match and 404ing, which forces the demo into a full-page
-// navigation that resets its walkthrough. Stripping the headers lets the
-// files resolve from public/ like any other static asset.
-export function proxy(request: NextRequest) {
+// (__next.*.txt) with RSC request headers set; Vercel's routing treats any
+// RSC-flagged request as a data request for THIS app — skipping the public/
+// file match and 404ing, which forces the demo into a full-page navigation
+// that resets its walkthrough. The routing decision is made from the original
+// request headers, so stripping them here doesn't help. Instead, re-issue the
+// request without the RSC headers: the fresh request matches the static file
+// in public/ and its response is returned as this request's response.
+export async function proxy(request: NextRequest) {
+  if (!request.headers.has('rsc') || request.headers.has('x-archive-refetch')) {
+    return NextResponse.next()
+  }
   const headers = new Headers(request.headers)
   headers.delete('rsc')
   headers.delete('next-router-state-tree')
   headers.delete('next-router-prefetch')
   headers.delete('next-router-segment-prefetch')
   headers.delete('next-url')
-  const response = NextResponse.rewrite(request.nextUrl, { request: { headers } })
-  response.headers.set('x-archive-proxy', 'hit')
-  return response
+  headers.set('x-archive-refetch', '1')
+  return fetch(request.nextUrl.toString(), { headers, redirect: 'manual' })
 }
 
 export const config = {
