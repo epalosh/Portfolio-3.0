@@ -20,7 +20,16 @@ export async function proxy(request: NextRequest) {
   headers.delete('next-router-segment-prefetch')
   headers.delete('next-url')
   headers.set('x-archive-refetch', '1')
-  return fetch(request.nextUrl.toString(), { headers, redirect: 'manual' })
+  const url = request.nextUrl.toString()
+  const upstream = await fetch(url, { headers, redirect: 'manual' })
+  const outHeaders = new Headers(upstream.headers)
+  outHeaders.set('x-archive-proxy', 'refetch')
+  outHeaders.set('x-dbg-fetched-url', url)
+  outHeaders.set('x-dbg-upstream-status', String(upstream.status))
+  outHeaders.set('x-dbg-upstream-matched', upstream.headers.get('x-matched-path') ?? 'none')
+  outHeaders.delete('content-encoding')
+  outHeaders.delete('content-length')
+  return new NextResponse(upstream.body, { status: upstream.status, headers: outHeaders })
 }
 
 export const config = {
